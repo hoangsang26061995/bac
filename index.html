@@ -44,17 +44,17 @@
 
           const img = document.createElement('img');
           img.src = imgBaseUrl + (index + 1) + '.jpg';
-          img.alt = item.tên || '';
-          // Hiển thị mô tả khi hover chuột vào ảnh
-          img.title = item.mota || item['mô tả'] || '';
+          img.alt = item["tên"] || '';
+          // Hiển thị tooltip mô tả khi hover chuột vào ảnh
+          img.title = item["MÔ TẢ"] || '';
 
           div.appendChild(img);
 
           const p = document.createElement('p');
           p.innerHTML =
             `MS: ${item.ms}<br>` +
-            `Tên: ${item.tên}<br>` +
-            `Giá: ${item.giá}`;
+            `Tên: ${item["tên"]}<br>` +
+            `Giá: ${item["giá"]}`;
           div.appendChild(p);
 
           dataDiv.appendChild(div);
