@@ -1,0 +1,25 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Giá bạc</title>
+</head>
+<body>
+  <h1>Giá bạc</h1>
+  <div id="data"></div>
+
+  <script>
+    fetch('giabac.json')
+      .then(response => response.json())
+      .then(data => {
+        const dataDiv = document.getElementById('data');
+        data.forEach(item => {
+          const p = document.createElement('p');
+          p.textContent = `${item.Column1}: ${item.Column2}`;
+          dataDiv.appendChild(p);
+        });
+      })
+      .catch(error => console.error('Error:', error));
+  </script>
+</body>
+</html>
