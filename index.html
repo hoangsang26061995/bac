@@ -13,10 +13,27 @@
     h1 {
       text-align: center;
       font-size: 2.3em;
-      margin-bottom: 30px;
+      margin-bottom: 16px;
       margin-top: 20px;
       color: #333;
       letter-spacing: 2px;
+    }
+    #contact-bar {
+      text-align:center;
+      margin-bottom:16px;
+      font-size:1.18em;
+      background: #f9f9f9;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+    #contact-bar a {
+      color:#007aff;
+      font-weight:bold;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+    #contact-bar a:hover {
+      text-decoration: underline;
     }
     #catalogue {
       display: flex;
@@ -115,6 +132,24 @@
       text-align: center;
       word-break: break-word;
     }
+    .order-btn {
+      margin-top: 16px;
+      background: #007aff;
+      color: #fff;
+      font-weight: bold;
+      padding: 12px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1em;
+      box-shadow: 0 2px 8px #007aff44;
+      display: inline-block;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .order-btn:hover {
+      background: #0051a8;
+      color: #fff;
+    }
     #pagination {
       text-align: center;
       margin: 30px 0 10px 0;
@@ -175,6 +210,11 @@
 </head>
 <body>
   <h1>Giá bạc</h1>
+  <div id="contact-bar">
+    <span><b>Liên hệ/Zalo:</b> <a href="tel:0972512865">0972512865</a></span> &nbsp;|&nbsp;
+    <a href="https://zalo.me/0972512865" target="_blank">Chat Zalo</a> &nbsp;|&nbsp;
+    <a href="https://www.facebook.com/messages/e2ee/t/7199455160170587" target="_blank">Chat Messenger</a>
+  </div>
   <div id="catalogue"></div>
   <button id="backbtn" style="display:none" onclick="showCatalogue()">← Quay về danh mục</button>
   <div id="filter-area" style="display:none"></div>
@@ -210,6 +250,7 @@
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
     const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
     const itemsPerPage = 20;
+    const messengerLink = 'https://www.facebook.com/messages/e2ee/t/7199455160170587';
     let dataAll = [];
     let productsByCat = {};
     let currentCategory = '';
@@ -264,7 +305,6 @@
 
     function renderPage(page) {
       let products = productsByCat[currentCategory] || [];
-
       // Lọc theo giá
       const pf = priceFilters.find(f => f.key === selectedPriceFilter) || priceFilters[0];
       products = products.filter(item => pf.fn(parseGia(item["giá"])));
@@ -295,6 +335,14 @@
           `<b>Tên:</b> ${item["tên"]}<br>` +
           `<b>Giá:</b> ${item["giá"]}`;
         div.appendChild(p);
+
+        // Nút đặt hàng
+        const orderBtn = document.createElement('a');
+        orderBtn.href = messengerLink;
+        orderBtn.target = '_blank';
+        orderBtn.textContent = 'ĐẶT HÀNG';
+        orderBtn.className = 'order-btn';
+        div.appendChild(orderBtn);
 
         dataDiv.appendChild(div);
       });
