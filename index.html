@@ -127,31 +127,27 @@
   <button id="backbtn" style="display:none" onclick="showCatalogue()">← Quay về danh mục</button>
   <div id="data" style="display:none"></div>
   <div id="pagination" style="display:none"></div>
-
   <script>
-    // DANH MỤC mới
+    // Danh mục và từ khóa phân loại
     const categories = [
-      { key: "day", label: "DÂY" },
-      { key: "nhan", label: "NHẪN" },
-      { key: "lac", label: "LẮC" },
-      { key: "vong", label: "VÒNG" },
-      { key: "da", label: "ĐÁ" }
+      { key: "day", label: "DÂY", keyword: "dây" },
+      { key: "nhan", label: "NHẪN", keyword: "nhẫn" },
+      { key: "lac", label: "LẮC", keyword: "lắc" },
+      { key: "vong", label: "VÒNG", keyword: "vòng" },
+      { key: "da", label: "ĐÁ", keyword: "đá" },
+      { key: "bong", label: "BÔNG", keyword: "bông" }
     ];
-    // Mapping sản phẩm cho từng danh mục (ví dụ: DÂY lấy ms 1-40, bạn tùy chỉnh cho các loại khác nếu muốn)
-    const categoryRanges = {
-      "day": [1, 40],
-      // "nhan": [41, 60], "lac": [61,80], "vong": [81,100], "da": [101,120] // Tùy bạn bổ sung!
-    };
 
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
     const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
     const itemsPerPage = 20;
     let dataAll = [];
+    let productsByCat = {};
     let currentCategory = '';
     let currentPage = 1;
     let totalPage = 1;
-    let msStart = 1, msEnd = 1;
 
+    // Hiển thị danh mục
     function showCatalogue() {
       document.getElementById('catalogue').style.display = 'flex';
       document.getElementById('backbtn').style.display = 'none';
@@ -159,10 +155,10 @@
       document.getElementById('pagination').style.display = 'none';
     }
 
+    // Hiển thị sản phẩm của 1 danh mục, phân trang
     function showCategory(catKey) {
       currentCategory = catKey;
       currentPage = 1;
-      [msStart, msEnd] = categoryRanges[catKey];
       renderPage(currentPage);
       document.getElementById('catalogue').style.display = 'none';
       document.getElementById('backbtn').style.display = 'inline-block';
@@ -171,9 +167,11 @@
     }
 
     function renderPage(page) {
-      const startMs = msStart + (page-1)*itemsPerPage;
-      const endMs = Math.min(msEnd, msStart + page*itemsPerPage - 1);
-      const data = dataAll.filter(item => item.ms >= startMs && item.ms <= endMs);
+      const products = productsByCat[currentCategory] || [];
+      totalPage = Math.ceil(products.length / itemsPerPage);
+      const start = (page - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const data = products.slice(start, end);
 
       const dataDiv = document.getElementById('data');
       dataDiv.innerHTML = '';
@@ -197,10 +195,9 @@
         dataDiv.appendChild(div);
       });
 
+      // Pagination
       const paginationDiv = document.getElementById('pagination');
       paginationDiv.innerHTML = '';
-      totalPage = Math.ceil((msEnd - msStart + 1) / itemsPerPage);
-
       const prevBtn = document.createElement('button');
       prevBtn.textContent = "Trang trước";
       prevBtn.disabled = page <= 1;
@@ -228,6 +225,7 @@
       paginationDiv.appendChild(nextBtn);
     }
 
+    // Hiển thị các ô chọn danh mục
     function renderCatalogue() {
       const catDiv = document.getElementById('catalogue');
       catDiv.innerHTML = '';
@@ -236,13 +234,31 @@
         el.className = 'catalogue-item';
         el.textContent = cat.label;
         el.onclick = () => {
-          if (categoryRanges[cat.key]) {
+          if ((productsByCat[cat.key] || []).length > 0) {
             showCategory(cat.key);
           } else {
-            alert('Chức năng chưa khả dụng cho danh mục này!');
+            alert('Hiện chưa có sản phẩm cho danh mục này!');
           }
         };
         catDiv.appendChild(el);
+      });
+    }
+
+    // Phân loại sản phẩm vào danh mục theo từ khóa trong tên
+    function classifyProducts() {
+      productsByCat = {};
+      categories.forEach(cat => productsByCat[cat.key] = []);
+      dataAll.forEach(item => {
+        const ten = (item["tên"] || "").toLowerCase();
+        let found = false;
+        for (let cat of categories) {
+          if (ten.includes(cat.keyword)) {
+            productsByCat[cat.key].push(item);
+            found = true;
+            break;
+          }
+        }
+        // Nếu không khớp danh mục nào, thì không đưa vào danh mục nào cả!
       });
     }
 
@@ -253,6 +269,7 @@
       })
       .then(data => {
         dataAll = data;
+        classifyProducts();
         renderCatalogue();
         showCatalogue();
       })
