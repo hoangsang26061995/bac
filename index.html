@@ -20,7 +20,7 @@
     }
     #contact-bar {
       text-align:center;
-      margin-bottom:16px;
+      margin-bottom:10px;
       font-size:1.18em;
       background: #f9f9f9;
       padding: 10px 0;
@@ -33,6 +33,19 @@
       margin: 0 8px;
     }
     #contact-bar a:hover {
+      text-decoration: underline;
+    }
+    #policy-link {
+      text-align:center;
+      margin-bottom:20px;
+    }
+    #policy-link a {
+      color:#007aff;
+      font-weight:bold;
+      font-size:1.1em;
+      text-decoration:none;
+    }
+    #policy-link a:hover {
       text-decoration: underline;
     }
     #catalogue {
@@ -193,6 +206,23 @@
       background: #007aff;
       color: #fff;
     }
+    #policy {
+      max-width:600px;
+      margin:40px auto 20px;
+      background:#f6f8fa;
+      padding:32px 22px;
+      border-radius:14px;
+      box-shadow:0 2px 8px #0001;
+    }
+    #policy h2 {
+      color:#007aff;
+      margin-top:0;
+    }
+    #policy ul {
+      font-size:1.1em;
+      line-height:1.7;
+      padding-left: 18px;
+    }
     @media (max-width: 1000px) {
       #data {
         grid-template-columns: 1fr;
@@ -205,6 +235,9 @@
       .item {
         width: 96vw;
       }
+      #policy {
+        padding:18px 3vw;
+      }
     }
   </style>
 </head>
@@ -215,11 +248,24 @@
     <a href="https://zalo.me/0972512865" target="_blank">Chat Zalo</a> &nbsp;|&nbsp;
     <a href="https://m.me/thuhien18102" target="_blank">Chat Messenger</a>
   </div>
+  <div id="policy-link">
+    <a href="#policy">Chính sách</a>
+  </div>
   <div id="catalogue"></div>
   <button id="backbtn" style="display:none" onclick="showCatalogue()">← Quay về danh mục</button>
   <div id="filter-area" style="display:none"></div>
   <div id="data" style="display:none"></div>
   <div id="pagination" style="display:none"></div>
+  <div id="policy">
+    <h2>Chính sách đổi trả & giao hàng</h2>
+    <ul>
+      <li><b>Đổi trả:</b> Sản phẩm được đổi/trả trong vòng <b>5 ngày</b> nếu còn nguyên vẹn, chưa qua sử dụng, không bị trầy xước, móp méo, còn đầy đủ hộp, phụ kiện (nếu có).</li>
+      <li><b>Giao hàng nội tỉnh:</b> Phí ship 20.000đ/đơn.</li>
+      <li><b>Giao hàng ngoài tỉnh:</b> Phí ship 25.000đ/đơn.</li>
+      <li>Thời gian giao hàng dự kiến: từ 1-5 ngày tuỳ khu vực.</li>
+      <li>Quý khách vui lòng liên hệ trước khi đổi trả sản phẩm.</li>
+    </ul>
+  </div>
   <script>
     // Hàm bỏ dấu tiếng Việt
     function removeVietnameseTones(str) {
@@ -336,7 +382,7 @@
           `<b>Giá:</b> ${item["giá"]}`;
         div.appendChild(p);
 
-        // Nút đặt hàng cập nhật đúng link Messenger
+        // Nút đặt hàng Messenger
         const orderBtn = document.createElement('a');
         orderBtn.href = messengerLink;
         orderBtn.target = '_blank';
