@@ -18,11 +18,11 @@
       padding: 24px 18px;
       border-radius: 18px;
       box-shadow: 0 2px 8px #0001;
-      width: 260px;
+      width: 420px;
     }
     .item img {
-      width: 200px;
-      height: 200px;
+      width: 400px;
+      height: 400px;
       margin-bottom: 20px;
       object-fit: cover;
       cursor: pointer;
@@ -80,8 +80,7 @@
           p.innerHTML =
             `<b>MS:</b> ${item.ms}<br>` +
             `<b>Tên:</b> ${item["tên"]}<br>` +
-            `<b>Giá:</b> ${item["giá"]}<br>` +
-            `<b>Mô tả:</b> ${item["MÔ TẢ"] || ''}`;
+            `<b>Giá:</b> ${item["giá"]}`;
           div.appendChild(p);
 
           dataDiv.appendChild(div);
