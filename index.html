@@ -15,7 +15,6 @@
       color: #333;
       letter-spacing: 2px;
     }
-    /* CATALOG STYLES */
     #catalogue {
       display: flex;
       flex-wrap: wrap;
@@ -44,8 +43,6 @@
       border: 2px solid #007aff;
       box-shadow: 0 4px 24px #007aff44;
     }
-
-    /* PRODUCT GRID STYLES */
     #data {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -132,19 +129,18 @@
   <div id="pagination" style="display:none"></div>
 
   <script>
-    // DANH MỤC
+    // DANH MỤC mới
     const categories = [
-      { key: "daymat", label: "DÂY MẶT" },
+      { key: "day", label: "DÂY" },
       { key: "nhan", label: "NHẪN" },
       { key: "lac", label: "LẮC" },
       { key: "vong", label: "VÒNG" },
-      { key: "da", label: "ĐÁ PHONG THỦY" }
+      { key: "da", label: "ĐÁ" }
     ];
-    // Mapping sản phẩm cho từng danh mục (ở đây chỉ demo "DÂY MẶT" lấy ms 1-40)
+    // Mapping sản phẩm cho từng danh mục (ví dụ: DÂY lấy ms 1-40, bạn tùy chỉnh cho các loại khác nếu muốn)
     const categoryRanges = {
-      "daymat": [1, 40],
-      // Bạn có thể bổ sung các range ms cho các loại khác ở đây
-      // Ví dụ: "nhan": [41, 60], "lac": [61,80], ...
+      "day": [1, 40],
+      // "nhan": [41, 60], "lac": [61,80], "vong": [81,100], "da": [101,120] // Tùy bạn bổ sung!
     };
 
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
@@ -156,7 +152,6 @@
     let totalPage = 1;
     let msStart = 1, msEnd = 1;
 
-    // Hiển thị danh mục
     function showCatalogue() {
       document.getElementById('catalogue').style.display = 'flex';
       document.getElementById('backbtn').style.display = 'none';
@@ -164,12 +159,10 @@
       document.getElementById('pagination').style.display = 'none';
     }
 
-    // Hiển thị sản phẩm của 1 danh mục, phân trang
     function showCategory(catKey) {
       currentCategory = catKey;
       currentPage = 1;
       [msStart, msEnd] = categoryRanges[catKey];
-      // Lọc sản phẩm theo ms
       renderPage(currentPage);
       document.getElementById('catalogue').style.display = 'none';
       document.getElementById('backbtn').style.display = 'inline-block';
@@ -204,7 +197,6 @@
         dataDiv.appendChild(div);
       });
 
-      // Pagination
       const paginationDiv = document.getElementById('pagination');
       paginationDiv.innerHTML = '';
       totalPage = Math.ceil((msEnd - msStart + 1) / itemsPerPage);
@@ -236,7 +228,6 @@
       paginationDiv.appendChild(nextBtn);
     }
 
-    // Ban đầu hiển thị các lựa chọn danh mục
     function renderCatalogue() {
       const catDiv = document.getElementById('catalogue');
       catDiv.innerHTML = '';
@@ -255,7 +246,6 @@
       });
     }
 
-    // Lấy dữ liệu và khởi tạo
     fetch(jsonUrl)
       .then(response => {
         if (!response.ok) throw new Error('Không lấy được file JSON');
