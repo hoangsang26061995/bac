@@ -20,7 +20,7 @@
   <div id="data"></div>
 
   <script>
-    fetch('giabac.json')
+    fetch('https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/giabac.json')
       .then(response => response.json())
       .then(data => {
         const dataDiv = document.getElementById('data');
@@ -31,10 +31,11 @@
 
           const img = document.createElement('img');
           img.src = `${repoUrl}${index + 1}.jpg`;
+          img.title = item.mô_tả;
           div.appendChild(img);
 
           const p = document.createElement('p');
-          p.textContent = `MS: ${item.ms}, Giá: ${item.giá}`;
+          p.innerHTML = `MS: ${item.ms}<br>Tên: ${item.tên}<br>Giá: ${item.giá}`;
           div.appendChild(p);
 
           dataDiv.appendChild(div);
