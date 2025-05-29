@@ -3,6 +3,49 @@
 <head>
   <title>Giá bạc</title>
   <style>
+    body {
+      background: #fff;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      margin-top: 20px;
+      color: #333;
+      letter-spacing: 2px;
+    }
+    /* CATALOG STYLES */
+    #catalogue {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 36px;
+      margin: 40px 0;
+    }
+    .catalogue-item {
+      background: #f2f2f2;
+      border-radius: 18px;
+      padding: 40px 48px;
+      font-size: 2.2em;
+      font-weight: bold;
+      color: #007aff;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0001;
+      transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+      text-align: center;
+      margin: 0 12px;
+      border: 2px solid #fff;
+    }
+    .catalogue-item:hover {
+      background: #007aff;
+      color: #fff;
+      transform: translateY(-6px) scale(1.04);
+      border: 2px solid #007aff;
+      box-shadow: 0 4px 24px #007aff44;
+    }
+
+    /* PRODUCT GRID STYLES */
     #data {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -62,37 +105,81 @@
       margin: 0 8px;
       font-weight: bold;
     }
-    body {
-      background: #fff;
-      font-family: Arial, sans-serif;
+    #backbtn {
+      display: inline-block;
+      margin: 25px 0 10px 25px;
+      padding: 12px 26px;
+      font-size: 1.1em;
+      background: #eee;
+      color: #007aff;
+      border: 2px solid #007aff;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.18s, color 0.18s;
     }
-    h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-bottom: 30px;
-      margin-top: 20px;
-      color: #333;
-      letter-spacing: 2px;
+    #backbtn:hover {
+      background: #007aff;
+      color: #fff;
     }
   </style>
 </head>
 <body>
   <h1>Giá bạc</h1>
-  <div id="data"></div>
-  <div id="pagination"></div>
+  <div id="catalogue"></div>
+  <button id="backbtn" style="display:none" onclick="showCatalogue()">← Quay về danh mục</button>
+  <div id="data" style="display:none"></div>
+  <div id="pagination" style="display:none"></div>
 
   <script>
+    // DANH MỤC
+    const categories = [
+      { key: "daymat", label: "DÂY MẶT" },
+      { key: "nhan", label: "NHẪN" },
+      { key: "lac", label: "LẮC" },
+      { key: "vong", label: "VÒNG" },
+      { key: "da", label: "ĐÁ PHONG THỦY" }
+    ];
+    // Mapping sản phẩm cho từng danh mục (ở đây chỉ demo "DÂY MẶT" lấy ms 1-40)
+    const categoryRanges = {
+      "daymat": [1, 40],
+      // Bạn có thể bổ sung các range ms cho các loại khác ở đây
+      // Ví dụ: "nhan": [41, 60], "lac": [61,80], ...
+    };
+
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
     const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
     const itemsPerPage = 20;
     let dataAll = [];
+    let currentCategory = '';
     let currentPage = 1;
     let totalPage = 1;
+    let msStart = 1, msEnd = 1;
+
+    // Hiển thị danh mục
+    function showCatalogue() {
+      document.getElementById('catalogue').style.display = 'flex';
+      document.getElementById('backbtn').style.display = 'none';
+      document.getElementById('data').style.display = 'none';
+      document.getElementById('pagination').style.display = 'none';
+    }
+
+    // Hiển thị sản phẩm của 1 danh mục, phân trang
+    function showCategory(catKey) {
+      currentCategory = catKey;
+      currentPage = 1;
+      [msStart, msEnd] = categoryRanges[catKey];
+      // Lọc sản phẩm theo ms
+      renderPage(currentPage);
+      document.getElementById('catalogue').style.display = 'none';
+      document.getElementById('backbtn').style.display = 'inline-block';
+      document.getElementById('data').style.display = 'grid';
+      document.getElementById('pagination').style.display = 'block';
+    }
 
     function renderPage(page) {
-      // Lọc dữ liệu từ ms
-      const startMs = (page - 1) * itemsPerPage + 1;
-      const endMs = page * itemsPerPage;
+      const startMs = msStart + (page-1)*itemsPerPage;
+      const endMs = Math.min(msEnd, msStart + page*itemsPerPage - 1);
       const data = dataAll.filter(item => item.ms >= startMs && item.ms <= endMs);
 
       const dataDiv = document.getElementById('data');
@@ -120,6 +207,8 @@
       // Pagination
       const paginationDiv = document.getElementById('pagination');
       paginationDiv.innerHTML = '';
+      totalPage = Math.ceil((msEnd - msStart + 1) / itemsPerPage);
+
       const prevBtn = document.createElement('button');
       prevBtn.textContent = "Trang trước";
       prevBtn.disabled = page <= 1;
@@ -147,6 +236,26 @@
       paginationDiv.appendChild(nextBtn);
     }
 
+    // Ban đầu hiển thị các lựa chọn danh mục
+    function renderCatalogue() {
+      const catDiv = document.getElementById('catalogue');
+      catDiv.innerHTML = '';
+      categories.forEach(cat => {
+        const el = document.createElement('div');
+        el.className = 'catalogue-item';
+        el.textContent = cat.label;
+        el.onclick = () => {
+          if (categoryRanges[cat.key]) {
+            showCategory(cat.key);
+          } else {
+            alert('Chức năng chưa khả dụng cho danh mục này!');
+          }
+        };
+        catDiv.appendChild(el);
+      });
+    }
+
+    // Lấy dữ liệu và khởi tạo
     fetch(jsonUrl)
       .then(response => {
         if (!response.ok) throw new Error('Không lấy được file JSON');
@@ -154,13 +263,11 @@
       })
       .then(data => {
         dataAll = data;
-        // Tìm giá trị ms lớn nhất để tính tổng số trang
-        const maxMs = Math.max(...dataAll.map(item => item.ms));
-        totalPage = Math.ceil(maxMs / itemsPerPage);
-        renderPage(currentPage);
+        renderCatalogue();
+        showCatalogue();
       })
       .catch(error => {
-        document.getElementById('data').innerText = 'Lỗi: ' + error.message;
+        document.getElementById('catalogue').innerText = 'Lỗi: ' + error.message;
       });
   </script>
 </body>
