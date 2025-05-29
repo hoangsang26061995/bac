@@ -20,26 +20,28 @@
   <div id="data"></div>
 
   <script>
-    fetch('giabac.json')
-      .then(response => response.json())
-      .then(data => {
-        const dataDiv = document.getElementById('data');
-        data.forEach((item, index) => {
-          const div = document.createElement('div');
-          div.className = 'item';
+    const data = [
+      { ms: 1, giá: 200 },
+      { ms: 2, giá: 300 },
+      { ms: 3, giá: 400 },
+      // Thêm dữ liệu vào đây...
+    ];
 
-          const img = document.createElement('img');
-          img.src = `file:///E:/TẠM/${index + 1}.jpg`;
-          div.appendChild(img);
+    const dataDiv = document.getElementById('data');
+    data.forEach((item, index) => {
+      const div = document.createElement('div');
+      div.className = 'item';
 
-          const p = document.createElement('p');
-          p.textContent = `MS: ${item.ms}, Giá: ${item.giá}`;
-          div.appendChild(p);
+      const img = document.createElement('img');
+      img.src = `E:/TẠM/${index + 1}.jpg`;
+      div.appendChild(img);
 
-          dataDiv.appendChild(div);
-        });
-      })
-      .catch(error => console.error('Error:', error));
+      const p = document.createElement('p');
+      p.textContent = `MS: ${item.ms}, Giá: ${item.giá}`;
+      div.appendChild(p);
+
+      dataDiv.appendChild(div);
+    });
   </script>
 </body>
 </html>
