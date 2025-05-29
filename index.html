@@ -36,6 +36,32 @@
       line-height: 1.5;
       text-align: center;
     }
+    #pagination {
+      text-align: center;
+      margin: 30px 0 10px 0;
+    }
+    #pagination button {
+      padding: 10px 18px;
+      font-size: 1.1em;
+      margin: 0 10px;
+      border: none;
+      background: #007aff;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #0002;
+      transition: background 0.2s;
+    }
+    #pagination button:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+    #pagination span {
+      font-size: 1.2em;
+      margin: 0 8px;
+      font-weight: bold;
+    }
     body {
       background: #fff;
       font-family: Arial, sans-serif;
@@ -53,10 +79,73 @@
 <body>
   <h1>Giá bạc</h1>
   <div id="data"></div>
+  <div id="pagination"></div>
 
   <script>
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
     const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
+    const itemsPerPage = 20;
+    let dataAll = [];
+    let currentPage = 1;
+    let totalPage = 1;
+
+    function renderPage(page) {
+      // Lọc dữ liệu từ ms
+      const startMs = (page - 1) * itemsPerPage + 1;
+      const endMs = page * itemsPerPage;
+      const data = dataAll.filter(item => item.ms >= startMs && item.ms <= endMs);
+
+      const dataDiv = document.getElementById('data');
+      dataDiv.innerHTML = '';
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+
+        const img = document.createElement('img');
+        img.src = imgBaseUrl + item.ms + '.jpg';
+        img.alt = item["tên"] || '';
+        img.title = item["MÔ TẢ"] || '';
+        div.appendChild(img);
+
+        const p = document.createElement('p');
+        p.innerHTML =
+          `<b>MS:</b> ${item.ms}<br>` +
+          `<b>Tên:</b> ${item["tên"]}<br>` +
+          `<b>Giá:</b> ${item["giá"]}`;
+        div.appendChild(p);
+
+        dataDiv.appendChild(div);
+      });
+
+      // Pagination
+      const paginationDiv = document.getElementById('pagination');
+      paginationDiv.innerHTML = '';
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = "Trang trước";
+      prevBtn.disabled = page <= 1;
+      prevBtn.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderPage(currentPage);
+        }
+      };
+      paginationDiv.appendChild(prevBtn);
+
+      const pageSpan = document.createElement('span');
+      pageSpan.textContent = `Trang ${page} / ${totalPage}`;
+      paginationDiv.appendChild(pageSpan);
+
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = "Trang sau";
+      nextBtn.disabled = page >= totalPage;
+      nextBtn.onclick = () => {
+        if (currentPage < totalPage) {
+          currentPage++;
+          renderPage(currentPage);
+        }
+      };
+      paginationDiv.appendChild(nextBtn);
+    }
 
     fetch(jsonUrl)
       .then(response => {
@@ -64,28 +153,11 @@
         return response.json();
       })
       .then(data => {
-        const dataDiv = document.getElementById('data');
-        dataDiv.innerHTML = '';
-        data.forEach((item) => {
-          const div = document.createElement('div');
-          div.className = 'item';
-
-          const img = document.createElement('img');
-          // Lấy hình dựa vào ms trong JSON
-          img.src = imgBaseUrl + item.ms + '.jpg';
-          img.alt = item["tên"] || '';
-          img.title = item["MÔ TẢ"] || '';
-          div.appendChild(img);
-
-          const p = document.createElement('p');
-          p.innerHTML =
-            `<b>MS:</b> ${item.ms}<br>` +
-            `<b>Tên:</b> ${item["tên"]}<br>` +
-            `<b>Giá:</b> ${item["giá"]}`;
-          div.appendChild(p);
-
-          dataDiv.appendChild(div);
-        });
+        dataAll = data;
+        // Tìm giá trị ms lớn nhất để tính tổng số trang
+        const maxMs = Math.max(...dataAll.map(item => item.ms));
+        totalPage = Math.ceil(maxMs / itemsPerPage);
+        renderPage(currentPage);
       })
       .catch(error => {
         document.getElementById('data').innerText = 'Lỗi: ' + error.message;
