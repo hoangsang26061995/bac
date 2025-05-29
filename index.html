@@ -13,6 +13,7 @@
       height: 100px;
       margin-right: 10px;
       object-fit: cover;
+      cursor: pointer;
     }
     .item p {
       margin: 0;
@@ -44,6 +45,9 @@
           const img = document.createElement('img');
           img.src = imgBaseUrl + (index + 1) + '.jpg';
           img.alt = item.tên || '';
+          // Hiển thị mô tả khi hover chuột vào ảnh
+          img.title = item.mota || item['mô tả'] || '';
+
           div.appendChild(img);
 
           const p = document.createElement('p');
