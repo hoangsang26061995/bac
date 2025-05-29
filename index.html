@@ -223,6 +223,28 @@
       line-height:1.7;
       padding-left: 18px;
     }
+    #address {
+      max-width:600px;
+      margin:32px auto 20px;
+      background:#f6f8fa;
+      padding:18px 18px 18px 60px;
+      border-radius:14px;
+      box-shadow:0 2px 8px #0001;
+      position:relative;
+      font-size:1.13em;
+      line-height:1.7;
+    }
+    #address span {
+      position:absolute;
+      left:18px;
+      top:22px;
+      font-size:1.5em;
+      color:#007aff;
+    }
+    #address a {
+      color:#007aff;
+      text-decoration:underline;
+    }
     @media (max-width: 1000px) {
       #data {
         grid-template-columns: 1fr;
@@ -235,7 +257,7 @@
       .item {
         width: 96vw;
       }
-      #policy {
+      #policy, #address {
         padding:18px 3vw;
       }
     }
@@ -265,6 +287,14 @@
       <li>Thời gian giao hàng dự kiến: từ 1-5 ngày tuỳ khu vực.</li>
       <li>Quý khách vui lòng liên hệ trước khi đổi trả sản phẩm.</li>
     </ul>
+  </div>
+  <div id="address">
+    <span>📍</span>
+    <b>Địa chỉ:</b>
+    <a href="https://www.google.com/maps/place/Doanh+Nghi%E1%BB%87p+T%C6%B0+Nh%C3%A2n+Kim+Ho%C3%A0ng+B%E1%BA%A3y+Chanh/@9.3688065,105.8921107,20.71z/data=!4m6!3m5!1s0x31a1ac4000000001:0xcf6f8131e7d41453!8m2!3d9.3688306!4d105.8920296!16s%2Fg%2F11csrpr1mg?entry=ttu&g_ep=EgoyMDI1MDUyNi4wIKXMDSoASAFQAw%3D%3D"
+    target="_blank">
+      Doanh Nghiệp Tư Nhân Kim Hoàng Bảy Chanh
+    </a>
   </div>
   <script>
     // Hàm bỏ dấu tiếng Việt
