@@ -465,7 +465,7 @@
       document.getElementById('popup-content').innerHTML =
         `<div style="font-size:1.1em;margin-bottom:8px;">Mã sản phẩm: <b>${ms}</b><br>Tên: <b>${ten}</b></div>
         <button onclick="navigator.clipboard.writeText('Mã: ${ms}, Tên: ${ten}');this.innerText='Đã copy!';setTimeout(()=>this.innerText='Copy mã',1500)" style="padding:7px 18px;border-radius:6px;background:#eee;border:none;cursor:pointer;">Copy mã</button>`;
-      // Soạn đúng form theo yêu cầu: Shop ơi mình muốn đặt sản phẩm "MS"
+      // Soạn đúng mẫu: Shop ơi mình muốn đặt sản phẩm "MS"
       const messText = encodeURIComponent(`Shop ơi mình muốn đặt sản phẩm "${ms}"`);
       document.getElementById('popup-mess').href =
         `https://m.me/thuhien18102?text=${messText}`;
