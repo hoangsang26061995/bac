@@ -128,14 +128,21 @@
   <div id="data" style="display:none"></div>
   <div id="pagination" style="display:none"></div>
   <script>
+    // Hàm bỏ dấu tiếng Việt
+    function removeVietnameseTones(str) {
+      return str.normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/đ/g, 'd').replace(/Đ/g, 'D');
+    }
+
     // Danh mục và từ khóa phân loại
     const categories = [
-      { key: "day", label: "DÂY", keyword: "dây" },
-      { key: "nhan", label: "NHẪN", keyword: "nhẫn" },
-      { key: "lac", label: "LẮC", keyword: "lắc" },
-      { key: "vong", label: "VÒNG", keyword: "vòng" },
-      { key: "da", label: "ĐÁ", keyword: "đá" },
-      { key: "bong", label: "BÔNG", keyword: "bông" }
+      { key: "day", label: "DÂY", keyword: "day" },
+      { key: "nhan", label: "NHẪN", keyword: "nhan" },
+      { key: "lac", label: "LẮC", keyword: "lac" },
+      { key: "vong", label: "VÒNG", keyword: "vong" },
+      { key: "da", label: "ĐÁ", keyword: "da" },
+      { key: "bong", label: "BÔNG", keyword: "bong" }
     ];
 
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
@@ -147,7 +154,6 @@
     let currentPage = 1;
     let totalPage = 1;
 
-    // Hiển thị danh mục
     function showCatalogue() {
       document.getElementById('catalogue').style.display = 'flex';
       document.getElementById('backbtn').style.display = 'none';
@@ -155,7 +161,6 @@
       document.getElementById('pagination').style.display = 'none';
     }
 
-    // Hiển thị sản phẩm của 1 danh mục, phân trang
     function showCategory(catKey) {
       currentCategory = catKey;
       currentPage = 1;
@@ -225,7 +230,6 @@
       paginationDiv.appendChild(nextBtn);
     }
 
-    // Hiển thị các ô chọn danh mục
     function renderCatalogue() {
       const catDiv = document.getElementById('catalogue');
       catDiv.innerHTML = '';
@@ -244,21 +248,18 @@
       });
     }
 
-    // Phân loại sản phẩm vào danh mục theo từ khóa trong tên
+    // PHÂN LOẠI SẢN PHẨM (BỎ DẤU KHI SO SÁNH)
     function classifyProducts() {
       productsByCat = {};
       categories.forEach(cat => productsByCat[cat.key] = []);
       dataAll.forEach(item => {
-        const ten = (item["tên"] || "").toLowerCase();
-        let found = false;
+        const ten = removeVietnameseTones((item["tên"] || "").toLowerCase());
         for (let cat of categories) {
           if (ten.includes(cat.keyword)) {
             productsByCat[cat.key].push(item);
-            found = true;
             break;
           }
         }
-        // Nếu không khớp danh mục nào, thì không đưa vào danh mục nào cả!
       });
     }
 
