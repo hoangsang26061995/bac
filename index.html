@@ -41,10 +41,6 @@
     .item p {margin:0;font-size:2em;line-height:1.5;text-align:center;word-break:break-word;}
     .order-btn {margin-top:16px;background:#007aff;color:#fff;font-weight:bold;padding:12px 32px;border-radius:8px;text-decoration:none;font-size:1.1em;box-shadow:0 2px 8px #007aff44;display:inline-block;border:none;transition:background 0.2s,color 0.2s;cursor:pointer;}
     .order-btn:hover {background:#0051a8;color:#fff;}
-    .share-links {margin-top:8px;}
-    .share-links a {margin-right:18px;text-decoration:none;font-weight:bold;font-size:1.1em;}
-    .share-links .fb {color:#4267B2;}
-    .share-links .zalo {color:#1dcaff;}
     #pagination {text-align:center;margin:30px 0 10px 0;}
     #pagination button {padding:10px 18px;font-size:1.1em;margin:0 10px;border:none;background:#007aff;color:#fff;border-radius:8px;cursor:pointer;box-shadow:0 2px 8px #0002;transition:background 0.2s;}
     #pagination button:disabled {background:#aaa;cursor:not-allowed;box-shadow:none;}
@@ -129,10 +125,6 @@
       <h3 style="color:#007aff;margin-top:0">Đặt hàng nhanh</h3>
       <div id="popup-content"></div>
       <a id="popup-mess" href="#" target="_blank" style="display:inline-block;margin-top:18px;background:#007aff;color:#fff;font-weight:bold;padding:10px 32px;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #007aff44;font-size:1.1em;">Gửi Messenger</a>
-      <div class="share-links" style="margin-top:18px;">
-        <a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=https://hoangsang26061995.github.io/bac/" target="_blank">Chia sẻ Facebook</a>
-        <a class="zalo" href="https://zalo.me/share/url?url=https://hoangsang26061995.github.io/bac/" target="_blank">Chia sẻ Zalo</a>
-      </div>
     </div>
   </div>
   <!-- Nút chat nổi -->
@@ -214,7 +206,7 @@
       document.getElementById('testimonials-list').innerHTML = html;
     }
 
-    // Tìm kiếm sản phẩm
+    // Tìm kiếm sản phẩm (ưu tiên tìm đúng MS nếu nhập số)
     function searchProduct() {
       const kw = document.getElementById('search-input').value.trim().toLowerCase();
       if (!kw) {
@@ -222,11 +214,27 @@
         return;
       }
       let result = [];
-      for (const cat in productsByCat) {
-        result = result.concat(productsByCat[cat].filter(
-          item => (item["tên"] && removeVietnameseTones(item["tên"].toLowerCase()).includes(removeVietnameseTones(kw))) ||
-                  (item.ms && item.ms.toLowerCase().includes(kw))
-        ));
+      // Nếu nhập số, ưu tiên tìm đúng MS
+      if (!isNaN(kw)) {
+        for (const cat in productsByCat) {
+          const found = productsByCat[cat].find(
+            item => (item.ms && item.ms.toString().toLowerCase() === kw)
+          );
+          if (found) {
+            result = [found];
+            break;
+          }
+        }
+      }
+      // Nếu không tìm thấy MS chính xác, tìm tiếp theo tên hoặc MS chứa từ khoá
+      if (result.length === 0) {
+        for (const cat in productsByCat) {
+          result = result.concat(productsByCat[cat].filter(
+            item =>
+              (item.ms && item.ms.toString().toLowerCase().includes(kw)) ||
+              (item["tên"] && removeVietnameseTones(item["tên"].toLowerCase()).includes(removeVietnameseTones(kw)))
+          ));
+        }
       }
       document.getElementById('catalogue').style.display = 'none';
       document.getElementById('backbtn').style.display = 'inline-block';
@@ -263,7 +271,6 @@
         orderBtn.className = 'order-btn';
         orderBtn.onclick = () => openOrderPopup(item.ms, item["tên"]);
         div.appendChild(orderBtn);
-        div.appendChild(makeShareLinks());
         dataDiv.appendChild(div);
       });
     }
@@ -294,17 +301,8 @@
         orderBtn.className = 'order-btn';
         orderBtn.onclick = () => openOrderPopup(item.ms, item["tên"]);
         div.appendChild(orderBtn);
-        div.appendChild(makeShareLinks());
         featuredList.appendChild(div);
       });
-    }
-    // Share links
-    function makeShareLinks() {
-      const c = document.createElement('div');
-      c.className = "share-links";
-      c.innerHTML = `<a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=https://hoangsang26061995.github.io/bac/" target="_blank">Chia sẻ Facebook</a>
-      <a class="zalo" href="https://zalo.me/share/url?url=https://hoangsang26061995.github.io/bac/" target="_blank">Chia sẻ Zalo</a>`;
-      return c;
     }
 
     function showCatalogue() {
@@ -348,13 +346,12 @@
 
     function parseGia(str) {
       if (!str) return 0;
-      let s = (str + '').replace(/[^0-9]/g, ''); // loại bỏ ký tự không phải số
+      let s = (str + '').replace(/[^0-9]/g, '');
       return parseInt(s, 10) || 0;
     }
 
     function renderPage(page) {
       let products = productsByCat[currentCategory] || [];
-      // Lọc theo giá
       const pf = priceFilters.find(f => f.key === selectedPriceFilter) || priceFilters[0];
       products = products.filter(item => pf.fn(parseGia(item["giá"])));
 
@@ -385,18 +382,15 @@
           `<b>Giá:</b> ${item["giá"]}`;
         div.appendChild(p);
 
-        // Nút đặt hàng mở popup
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
         orderBtn.className = 'order-btn';
         orderBtn.onclick = () => openOrderPopup(item.ms, item["tên"]);
         div.appendChild(orderBtn);
 
-        div.appendChild(makeShareLinks());
         dataDiv.appendChild(div);
       });
 
-      // Pagination
       const paginationDiv = document.getElementById('pagination');
       paginationDiv.innerHTML = '';
       const prevBtn = document.createElement('button');
@@ -444,7 +438,6 @@
       });
     }
 
-    // PHÂN LOẠI SẢN PHẨM (BỎ DẤU KHI SO SÁNH)
     function classifyProducts() {
       productsByCat = {};
       categories.forEach(cat => productsByCat[cat.key] = []);
