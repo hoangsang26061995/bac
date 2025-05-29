@@ -137,14 +137,12 @@
     </a>
   </div>
   <script>
-    // Hàm bỏ dấu tiếng Việt
     function removeVietnameseTones(str) {
       return str.normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
                 .replace(/đ/g, 'd').replace(/Đ/g, 'D');
     }
 
-    // Danh mục và từ khóa phân loại
     const categories = [
       { key: "day", label: "DÂY", keyword: "day" },
       { key: "nhan", label: "NHẪN", keyword: "nhan" },
@@ -154,7 +152,6 @@
       { key: "bong", label: "BÔNG", keyword: "bong" }
     ];
 
-    // Các mức lọc giá
     const priceFilters = [
       { key: "all", label: "Tất cả", fn: _ => true },
       { key: "lt500", label: "< 500k", fn: gia => gia > 0 && gia < 500000 },
@@ -166,7 +163,6 @@
     const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
     const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
     const itemsPerPage = 20;
-    const messengerLink = 'https://m.me/thuhien18102';
     let dataAll = [];
     let productsByCat = {};
     let currentCategory = '';
@@ -185,15 +181,12 @@
     ];
     function renderTestimonials() {
       const d = new Date();
-      // "Random" ổn định theo ngày: dùng số ngày trong năm làm seed
       const seed = d.getFullYear()*400 + d.getMonth()*31 + d.getDate();
       function seededRandom(s) {
         var x = Math.sin(s) * 10000; return x - Math.floor(x);
       }
-      // Xáo trộn thứ tự reviews theo seed
       let idx = allReviews.map((r,i)=>i);
       idx.sort((a,b)=>seededRandom(seed+a)-seededRandom(seed+b));
-      // Chọn 2 đánh giá đầu
       let html = '';
       for(let i=0;i<2;i++) {
         const rv = allReviews[idx[i]];
@@ -206,7 +199,7 @@
       document.getElementById('testimonials-list').innerHTML = html;
     }
 
-    // Tìm kiếm sản phẩm (ưu tiên tìm đúng MS nếu nhập số)
+    // Tìm kiếm sản phẩm (ưu tiên tìm đúng MS nếu nhập số, nếu chỉ có 1 kết quả sẽ mở popup)
     function searchProduct() {
       const kw = document.getElementById('search-input').value.trim().toLowerCase();
       if (!kw) {
@@ -214,7 +207,6 @@
         return;
       }
       let result = [];
-      // Nếu nhập số, ưu tiên tìm đúng MS
       if (!isNaN(kw)) {
         for (const cat in productsByCat) {
           const found = productsByCat[cat].find(
@@ -226,7 +218,6 @@
           }
         }
       }
-      // Nếu không tìm thấy MS chính xác, tìm tiếp theo tên hoặc MS chứa từ khoá
       if (result.length === 0) {
         for (const cat in productsByCat) {
           result = result.concat(productsByCat[cat].filter(
@@ -235,6 +226,12 @@
               (item["tên"] && removeVietnameseTones(item["tên"].toLowerCase()).includes(removeVietnameseTones(kw)))
           ));
         }
+      }
+      // Nếu tìm thấy 1 sản phẩm, mở popup luôn
+      if (result.length === 1) {
+        openOrderPopup(result[0].ms, result[0]["tên"]);
+        document.getElementById('search-input').value = '';
+        return;
       }
       document.getElementById('catalogue').style.display = 'none';
       document.getElementById('backbtn').style.display = 'inline-block';
@@ -280,7 +277,7 @@
       const featuredList = document.getElementById('featured-list');
       if (!featuredList) return;
       featuredList.innerHTML = '';
-      const featured = dataAll.slice(0,4); // chọn 4 sản phẩm đầu làm nổi bật
+      const featured = dataAll.slice(0,4);
       featured.forEach(item => {
         const div = document.createElement('div');
         div.className = 'featured-item';
@@ -466,6 +463,13 @@
     function closeOrderPopup() {
       document.getElementById('order-popup').style.display = 'none';
     }
+
+    // Cho phép nhấn Enter để tìm kiếm
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('search-input').addEventListener('keydown', function(e){
+        if(e.key==='Enter'){ searchProduct(); }
+      });
+    });
 
     // Khởi tạo
     fetch(jsonUrl)
