@@ -24,9 +24,9 @@
   <div id="data"></div>
 
   <script>
-    // Đường dẫn JSON và thư mục ảnh
-    const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/giabac.json';
-    const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
+    // Đường dẫn file json và ảnh ở repo này (bac)
+    const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/giabac.json';
+    const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/bac/main/';
 
     fetch(jsonUrl)
       .then(response => {
@@ -35,21 +35,18 @@
       })
       .then(data => {
         const dataDiv = document.getElementById('data');
-        dataDiv.innerHTML = ''; // Xóa nội dung cũ nếu có
-
+        dataDiv.innerHTML = '';
         data.forEach((item, index) => {
           const div = document.createElement('div');
           div.className = 'item';
 
-          // Ảnh: tên ảnh là 1.jpg, 2.jpg, 3.jpg...
           const img = document.createElement('img');
           img.src = imgBaseUrl + (index + 1) + '.jpg';
           img.alt = item.tên || '';
           div.appendChild(img);
 
-          // Thông tin sản phẩm
           const p = document.createElement('p');
-          p.innerHTML = 
+          p.innerHTML =
             `STT: ${index + 1}<br>` +
             `MS: ${item.ms}<br>` +
             `Tên: ${item.tên}<br>` +
