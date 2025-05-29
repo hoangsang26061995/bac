@@ -12,6 +12,10 @@
       width: 100px;
       height: 100px;
       margin-right: 10px;
+      object-fit: cover;
+    }
+    .item p {
+      margin: 0;
     }
   </style>
 </head>
@@ -20,28 +24,44 @@
   <div id="data"></div>
 
   <script>
-    fetch('https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/giabac.json')
-      .then(response => response.json())
+    // Đường dẫn JSON và thư mục ảnh
+    const jsonUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/giabac.json';
+    const imgBaseUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
+
+    fetch(jsonUrl)
+      .then(response => {
+        if (!response.ok) throw new Error('Không lấy được file JSON');
+        return response.json();
+      })
       .then(data => {
         const dataDiv = document.getElementById('data');
-        const repoUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/';
+        dataDiv.innerHTML = ''; // Xóa nội dung cũ nếu có
+
         data.forEach((item, index) => {
           const div = document.createElement('div');
           div.className = 'item';
 
+          // Ảnh: tên ảnh là 1.jpg, 2.jpg, 3.jpg...
           const img = document.createElement('img');
-          img.src = `${repoUrl}${index + 1}.jpg`;
-          img.title = item.mô_tả;
+          img.src = imgBaseUrl + (index + 1) + '.jpg';
+          img.alt = item.tên || '';
           div.appendChild(img);
 
+          // Thông tin sản phẩm
           const p = document.createElement('p');
-          p.innerHTML = `MS: ${item.ms}<br>Tên: ${item.tên}<br>Giá: ${item.giá}`;
+          p.innerHTML = 
+            `STT: ${index + 1}<br>` +
+            `MS: ${item.ms}<br>` +
+            `Tên: ${item.tên}<br>` +
+            `Giá: ${item.giá}`;
           div.appendChild(p);
 
           dataDiv.appendChild(div);
         });
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => {
+        document.getElementById('data').innerText = 'Lỗi: ' + error.message;
+      });
   </script>
 </body>
 </html>
