@@ -35,6 +35,11 @@
       text-align:center;width:220px;max-width:92vw;
       display:flex;flex-direction:column;align-items:center;
       transition:transform 0.22s, box-shadow 0.18s;
+      opacity:0;transform:translateY(40px) scale(0.98);
+      animation:fadeInUp 0.7s 0.2s forwards;
+    }
+    @keyframes fadeInUp {
+      to {opacity:1;transform:translateY(0) scale(1);}
     }
     .featured-item:hover {transform:translateY(-7px) scale(1.025);box-shadow:0 6px 28px #ff980044;}
     .featured-item img {width:200px;height:200px;object-fit:cover;border-radius:10px;background:#fff;box-shadow:0 1px 6px #0002;margin-bottom:10px;transition:transform 0.18s;}
@@ -60,14 +65,25 @@
     .item {
       display:flex;flex-direction:column;align-items:center;background:#f2f2f2;padding:24px 18px;border-radius:18px;
       box-shadow:0 2px 8px #0001;width:420px;max-width:98vw;position:relative;
-      transition:transform 0.22s, box-shadow 0.18s;
+      transition:transform 0.22s, box-shadow 0.18s, opacity 0.38s, filter 0.38s;
+      opacity:0;transform:translateY(30px) scale(0.985);
     }
+    .item.show {opacity:1;transform:translateY(0) scale(1);}
     .item:hover {transform:translateY(-7px) scale(1.02);box-shadow:0 6px 26px #007aff22;}
     .item img {width:400px;height:400px;margin-bottom:20px;object-fit:cover;cursor:pointer;border-radius:12px;box-shadow:0 2px 8px #0003;border:2px solid #ddd;max-width:96vw;height:auto;aspect-ratio:1/1;background:#fff;transition:transform 0.18s;}
     .item:hover img {transform:scale(1.04);}
     .item p {margin:0;font-size:2em;line-height:1.5;text-align:center;word-break:break-word;}
-    .order-btn {margin-top:16px;background:#007aff;color:#fff;font-weight:bold;padding:12px 32px;border-radius:8px;text-decoration:none;font-size:1.1em;box-shadow:0 2px 8px #007aff44;display:inline-block;border:none;transition:background 0.22s,color 0.22s,box-shadow 0.18s;}
-    .order-btn:hover {background:#0051a8;color:#fff;box-shadow:0 2px 14px #007aff44;}
+    .order-btn, #popup-mess {
+      margin-top:16px;background:#007aff;color:#fff;font-weight:bold;padding:12px 32px;border-radius:8px;text-decoration:none;font-size:1.1em;box-shadow:0 2px 8px #007aff44;display:inline-block;border:none;transition:background 0.22s,color 0.22s,box-shadow 0.18s;
+      position:relative;overflow:hidden;z-index:1;cursor:pointer;
+    }
+    .order-btn:hover, #popup-mess:hover {background:#0051a8;color:#fff;box-shadow:0 2px 14px #007aff44;}
+    .ripple-anim {
+      position:absolute; border-radius:50%; background:rgba(255,255,255,0.55); pointer-events:none;
+      transform:scale(0); animation:ripple 0.6s linear;
+      z-index:2;
+    }
+    @keyframes ripple {to{transform:scale(3);opacity:0;}}
     #pagination {text-align:center;margin:30px 0 10px 0;}
     #pagination button {padding:10px 18px;font-size:1.1em;margin:0 10px;border:none;background:#007aff;color:#fff;border-radius:8px;cursor:pointer;box-shadow:0 2px 8px #0002;transition:background 0.2s;}
     #pagination button:disabled {background:#aaa;cursor:not-allowed;box-shadow:none;}
@@ -77,11 +93,16 @@
     #policy {max-width:600px;margin:40px auto 20px;background:#f6f8fa;padding:32px 22px;border-radius:14px;box-shadow:0 2px 8px #0001;}
     #policy h2 {color:#007aff;margin-top:0;}
     #policy ul {font-size:1.1em;line-height:1.7;padding-left:18px;}
-    #order-popup {display:none;position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.32);z-index:99;align-items:center;justify-content:center;transition:background 0.3s;}
-    #order-popup.show .popup-inner {animation:popupIn 0.32s cubic-bezier(.25,1.6,.4,1.1);}
-    @keyframes popupIn {from{transform:scale(0.8) translateY(60px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
-    #order-popup .popup-inner {background:#fff;min-width:320px;max-width:96vw;padding:30px 20px;border-radius:12px;box-shadow:0 2px 16px #0003;text-align:center;position:relative;}
+    #order-popup {opacity:0;pointer-events:none;transition:opacity 0.25s;display:none;align-items:center;justify-content:center;position:fixed;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.32);z-index:99;}
+    #order-popup.show {opacity:1;pointer-events:auto;display:flex;}
+    #order-popup .popup-inner {background:#fff;min-width:320px;max-width:96vw;padding:30px 20px;border-radius:12px;box-shadow:0 2px 16px #0003;text-align:center;position:relative;transform:scale(0.85);opacity:0;transition:all 0.28s cubic-bezier(.23,1.24,.4,1);}
+    #order-popup.show .popup-inner {transform:scale(1);opacity:1;}
     #order-popup .popup-inner button.close {position:absolute;top:8px;right:12px;background:none;border:none;font-size:2em;color:#aaa;cursor:pointer;}
+    #loader {display:none;justify-content:center;align-items:center;margin:30px 0;}
+    .skeleton {background:#ececec;border-radius:8px;margin:10px auto;width:90vw;max-width:410px;height:360px;animation:skel 1.2s infinite linear;}
+    @keyframes skel {0%{opacity:.8;}50%{opacity:.4;}100%{opacity:.8;}}
+    .scroll-fade { opacity:0; transform:translateY(60px); transition:all 0.7s cubic-bezier(.2,.8,.4,1.1);}
+    .scroll-fade.visible { opacity:1; transform:translateY(0);}
     #address {max-width:600px;margin:32px auto 32px;background:#f6f8fa;padding:18px 18px 18px 60px;border-radius:14px;box-shadow:0 2px 8px #0001;position:relative;font-size:1.13em;line-height:1.7;}
     #address span {position:absolute;left:18px;top:22px;font-size:1.5em;color:#007aff;}
     #address a {color:#007aff;text-decoration:underline;}
@@ -119,20 +140,21 @@
     <input id="search-input" type="text" placeholder="Tìm sản phẩm theo tên hoặc mã...">
     <button onclick="searchProduct()">Tìm kiếm</button>
   </div>
-  <div id="featured-products">
+  <div id="loader"></div>
+  <div id="featured-products" class="scroll-fade">
     <h2>Sản phẩm nổi bật</h2>
     <div id="featured-list"></div>
   </div>
-  <div id="testimonials">
+  <div id="testimonials" class="scroll-fade">
     <h2>Khách hàng nhận xét</h2>
     <div id="testimonials-list"></div>
   </div>
-  <div id="catalogue"></div>
+  <div id="catalogue" class="scroll-fade"></div>
   <button id="backbtn" style="display:none" onclick="showCatalogue()">← Quay về danh mục</button>
   <div id="filter-area" style="display:none"></div>
   <div id="data" style="display:none"></div>
   <div id="pagination" style="display:none"></div>
-  <div id="policy">
+  <div id="policy" class="scroll-fade">
     <h2>Chính sách đổi trả & giao hàng</h2>
     <ul>
       <li><b>Đổi trả:</b> Sản phẩm được đổi/trả trong vòng <b>5 ngày</b> nếu còn nguyên vẹn, chưa qua sử dụng, không bị trầy xước, móp méo, còn đầy đủ hộp, phụ kiện (nếu có).</li>
@@ -142,10 +164,10 @@
       <li>Mọi thắc mắc hoặc đổi trả, liên hệ <a href="mailto:hsck19956@gmail.com">hsck19956@gmail.com</a> hoặc Zalo/SĐT <a href="tel:0972512865">0972512865</a>.</li>
     </ul>
   </div>
-  <div id="address">
+  <div id="address" class="scroll-fade">
     <span>📍</span>
     <b>Địa chỉ:</b>
-    <a href="https://www.google.com/maps/place/Doanh+Nghi%E1%BB%87p+T%C6%B0+Nh%C3%A2n+Kim+Ho%C3%A0ng+B%E1%BA%A3y+Chanh/@9.3688065,105.8921107,20.71z/data=!4m6!3m5!1s0x31a1ac4000000001:0xcf6f8131e7d41453!8m2!3d9.3688306!4d105.8920296!16s%2Fg%2F11csrpr1mg?entry=ttu&g_ep=EgoyMDI1MDUyNi4wIKXMDSoASAFQAw%3D%3D"
+    <a href="https://www.google.com/maps/place/Doanh+Nghi%E1%BB%87p+T%C6%B0+Nh%C3%A2n+Kim+Ho%C3%A0ng+B%E1%BA%A3y+Chanh/@9.3688065,105.8921107,20.71z/data=!4m6!3m5!1s0x31a1ac4000000001:0xcf6f8131e7d41453!8m2!3d9.3688306!4d105.8920296!16s%2Fg%2F11csrpr1mg?entry=ttu"
     target="_blank">
       Doanh Nghiệp Tư Nhân Kim Hoàng Bảy Chanh
     </a>
@@ -160,7 +182,7 @@
       <button class="close" onclick="closeOrderPopup()">×</button>
       <h3 style="color:#007aff;margin-top:0">Đặt hàng nhanh</h3>
       <div id="popup-content"></div>
-      <a id="popup-mess" href="#" target="_blank" style="display:inline-block;margin-top:18px;background:#007aff;color:#fff;font-weight:bold;padding:10px 32px;border-radius:8px;text-decoration:none;box-shadow:0 2px 8px #007aff44;font-size:1.1em;">Gửi Messenger</a>
+      <a id="popup-mess" href="#" target="_blank" class="ripple-btn">Gửi Messenger</a>
     </div>
   </div>
   <!-- Nút chat nổi -->
@@ -183,6 +205,16 @@
     </div>
   </footer>
   <script>
+    // Hiệu ứng xuất hiện khi cuộn
+    function scrollFadeIn() {
+      document.querySelectorAll('.scroll-fade').forEach(el=>{
+        const rect = el.getBoundingClientRect();
+        if(rect.top < window.innerHeight-60) el.classList.add('visible');
+      });
+    }
+    window.addEventListener('scroll', scrollFadeIn);
+    window.addEventListener('DOMContentLoaded', scrollFadeIn);
+
     function removeVietnameseTones(str) {
       return str.normalize('NFD')
                 .replace(/[\u0300-\u036f]/g, '')
@@ -243,6 +275,18 @@
       document.getElementById('testimonials-list').innerHTML = html;
     }
 
+    // Loading skeleton
+    function showLoader(n) {
+      const loader = document.getElementById('loader');
+      loader.style.display = 'flex';
+      let s = '';
+      for(let i=0;i<n;i++) s += '<div class="skeleton"></div>';
+      loader.innerHTML = s;
+    }
+    function hideLoader() {
+      document.getElementById('loader').style.display = 'none';
+    }
+
     // Tìm kiếm sản phẩm (ưu tiên tìm đúng MS nếu nhập số, nếu chỉ có 1 kết quả sẽ mở popup với hình và giá)
     function searchProduct() {
       const kw = document.getElementById('search-input').value.trim().toLowerCase();
@@ -293,9 +337,10 @@
         </div>`;
         return;
       }
-      result.forEach(item => {
+      result.forEach((item,i) => {
         const div = document.createElement('div');
         div.className = 'item';
+        setTimeout(()=>div.classList.add('show'),80+i*45);
         const img = document.createElement('img');
         img.src = imgBaseUrl + item.ms + '.jpg';
         img.alt = item["tên"] || '';
@@ -309,11 +354,15 @@
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
-        orderBtn.className = 'order-btn';
-        orderBtn.onclick = () => openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl + item.ms + ".jpg");
+        orderBtn.className = 'order-btn ripple-btn';
+        orderBtn.onclick = function(e) {
+          openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl + item.ms + ".jpg");
+          rippleEffect(e,this);
+        };
         div.appendChild(orderBtn);
         dataDiv.appendChild(div);
       });
+      rippleBtnInit();
     }
 
     // Sản phẩm nổi bật
@@ -322,9 +371,10 @@
       if (!featuredList) return;
       featuredList.innerHTML = '';
       const featured = dataAll.slice(0,4);
-      featured.forEach(item => {
+      featured.forEach((item,i) => {
         const div = document.createElement('div');
         div.className = 'featured-item';
+        setTimeout(()=>div.style.opacity=1,130+i*120);
         const badge = document.createElement('div');
         badge.className = 'badge-hot';
         badge.textContent = 'Nổi bật';
@@ -339,11 +389,15 @@
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
-        orderBtn.className = 'order-btn';
-        orderBtn.onclick = () => openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl + item.ms + ".jpg");
+        orderBtn.className = 'order-btn ripple-btn';
+        orderBtn.onclick = function(e) {
+          openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl + item.ms + ".jpg");
+          rippleEffect(e,this);
+        };
         div.appendChild(orderBtn);
         featuredList.appendChild(div);
       });
+      rippleBtnInit();
     }
 
     function showCatalogue() {
@@ -388,6 +442,8 @@
       return parseInt(s, 10) || 0;
     }
     function renderPage(page) {
+      showLoader(2);
+      setTimeout(()=>{
       let products = productsByCat[currentCategory] || [];
       const pf = priceFilters.find(f => f.key === selectedPriceFilter) || priceFilters[0];
       products = products.filter(item => pf.fn(parseGia(item["giá"])));
@@ -400,9 +456,10 @@
       if(data.length === 0) {
         dataDiv.innerHTML = '<div style="font-size:1.5em;grid-column:span 2;text-align:center;color:#777;margin:30px 0">Không có sản phẩm nào phù hợp.</div>';
       }
-      data.forEach(item => {
+      data.forEach((item,i) => {
         const div = document.createElement('div');
         div.className = 'item';
+        setTimeout(()=>div.classList.add('show'),80+i*45);
         const img = document.createElement('img');
         img.src = imgBaseUrl + item.ms + '.jpg';
         img.alt = item["tên"] || '';
@@ -416,11 +473,17 @@
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
-        orderBtn.className = 'order-btn';
-        orderBtn.onclick = () => openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl + item.ms + ".jpg");
+        orderBtn.className = 'order-btn ripple-btn';
+        orderBtn.onclick = function(e) {
+          openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl + item.ms + ".jpg");
+          rippleEffect(e,this);
+        };
         div.appendChild(orderBtn);
         dataDiv.appendChild(div);
       });
+      hideLoader();
+      rippleBtnInit();
+      },350)
       const paginationDiv = document.getElementById('pagination');
       paginationDiv.innerHTML = '';
       const prevBtn = document.createElement('button');
@@ -477,7 +540,27 @@
         }
       });
     }
-    // Popup đặt hàng (hiện cả hình và giá)
+    // Ripple effect cho nút
+    function rippleEffect(e, btn) {
+      const rect = btn.getBoundingClientRect();
+      const circle = document.createElement('span');
+      circle.className = 'ripple-anim';
+      circle.style.width = circle.style.height = Math.max(rect.width, rect.height) + 'px';
+      circle.style.left = (e.clientX - rect.left - rect.width/2) + 'px';
+      circle.style.top = (e.clientY - rect.top - rect.height/2) + 'px';
+      btn.appendChild(circle);
+      setTimeout(()=>circle.remove(),600);
+    }
+    // Khởi tạo ripple cho tất cả nút mới render
+    function rippleBtnInit() {
+      document.querySelectorAll('.ripple-btn').forEach(btn=>{
+        if(!btn.dataset.ripple){
+          btn.addEventListener('click',function(e){rippleEffect(e,this)});
+          btn.dataset.ripple = "1";
+        }
+      });
+    }
+    // Popup đặt hàng (hiện cả hình và giá) + hiệu ứng mượt
     function openOrderPopup(ms, ten, gia, imgUrl) {
       if (!gia || !imgUrl) {
         let sp = null;
@@ -492,8 +575,8 @@
         }
       }
       const popup = document.getElementById('order-popup');
-      popup.classList.add('show');
       popup.style.display = 'flex';
+      setTimeout(()=>popup.classList.add('show'),5);
       document.getElementById('popup-content').innerHTML =
         `<div style="margin-bottom:10px;">
           <img src="${imgUrl}" alt="${ten || ''}" style="max-width:220px;max-height:220px;border-radius:11px;box-shadow:0 2px 8px #0003;background:#fff;"><br>
@@ -509,8 +592,9 @@
         `https://m.me/thuhien18102?text=${messText}`;
     }
     function closeOrderPopup() {
-      document.getElementById('order-popup').classList.remove('show');
-      document.getElementById('order-popup').style.display = 'none';
+      const popup = document.getElementById('order-popup');
+      popup.classList.remove('show');
+      setTimeout(() => { popup.style.display = 'none'; }, 260);
     }
     // Cho phép nhấn Enter để tìm kiếm
     document.addEventListener('DOMContentLoaded', function() {
@@ -518,20 +602,25 @@
         if(e.key==='Enter'){ searchProduct(); }
       });
     });
+    // Tải dữ liệu có skeleton loader
+    showLoader(2);
     fetch(jsonUrl)
       .then(response => {
         if (!response.ok) throw new Error('Không lấy được file JSON');
         return response.json();
       })
       .then(data => {
+        hideLoader();
         dataAll = data;
         classifyProducts();
         renderCatalogue();
         showCatalogue();
         showFeaturedProducts();
         renderTestimonials();
+        rippleBtnInit();
       })
       .catch(error => {
+        hideLoader();
         document.getElementById('catalogue').innerText = 'Lỗi: ' + error.message;
       });
   </script>
