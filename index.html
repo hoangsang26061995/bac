@@ -208,9 +208,46 @@ footer .workhours {
   color: #fff;
   border: 2px solid #1abc9c;
 }
+    <head>
+  ...
+  <style>
+    /* Các CSS cũ nếu có */
+
+    /* Dán đoạn CSS bạn vừa gửi vào đây */
+    #promo-banner {
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+    #rainbow-img {
+      position: absolute;
+      left: -200px;
+      top: 50%;
+      transform: translateY(-60%);
+      height: 60px;
+      animation: rainbow-move-image 5s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .banner-title {
+      position: relative;
+      z-index: 2;
+      color: #fff;
+      font-size: 2em;
+      font-weight: bold;
+    }
+    @keyframes rainbow-move-image {
+      0% {
+        left: -200px;
+      }
+      100% {
+        left: 100%;
+      }
+    }
   </style>
 </head>
 <body>
+  <img id="rainbow-img" src="CAUVONG.png" alt="Cầu vồng">
   <h1>THU HIỀN JEWELRY</h1>
   <div id="promo-banner">
   <span>🎁 <b>BẢO HÀNH LÀM SÁNG TRỌN ĐỜI</b></span>
