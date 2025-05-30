@@ -475,7 +475,7 @@ footer .workhours {
       const featuredList = document.getElementById('featured-list');
       if (!featuredList) return;
       featuredList.innerHTML = '';
-      const featured = dataAll.slice(0,4);
+      const featured = dataAll.slice(0,6);
       featured.forEach((item,i) => {
         const div = document.createElement('div');
         div.className = 'featured-item';
