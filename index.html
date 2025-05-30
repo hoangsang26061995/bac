@@ -196,13 +196,13 @@
     #catalogue {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;   /* Căn giữa ngang */
-      align-items: center;       /* Căn giữa dọc nếu cần */
+      justify-content: center;
+      align-items: center;
       gap: 32px;
+      min-height: 60vh;
       margin: 40px 0 10px 0;
       padding: 0 8px;
       background: var(--white);
-      min-height: 120px;
     }
     .catalogue-item {
       background: var(--blue-light);
@@ -525,7 +525,7 @@
       © 2025 Kim Hoàng Bảy Chanh. All rights reserved.
     </div>
   </footer>
-  <script>
+    <script>
     // Hiệu ứng xuất hiện khi cuộn
     function scrollFadeIn() {
       document.querySelectorAll('.scroll-fade').forEach(el=>{
@@ -595,7 +595,9 @@
       }
       document.getElementById('testimonials-list').innerHTML = html;
     }
-        function showLoader(n) {
+
+    // Loading skeleton
+    function showLoader(n) {
       const loader = document.getElementById('loader');
       loader.style.display = 'flex';
       let s = '';
