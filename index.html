@@ -132,10 +132,41 @@
       #policy,#address {padding:18px 3vw;}
       #featured-list {flex-direction:column;gap:18px;}
       .featured-item {width:96vw;max-width:96vw;}
+      #promo-banner {
+  width: 100%;
+  background: linear-gradient(90deg, #ff9800 0%, #007aff 100%);
+  color: #fff;
+  font-size: 1.15em;
+  font-weight: bold;
+  padding: 10px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 999;
+  box-shadow: 0 2px 8px #0002;
+}
+
+#promo-marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 22s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0);}
+  100% { transform: translateX(-100%);}
     }
   </style>
 </head>
 <body>
+   <!-- Banner khuyến mãi -->
+<div id="promo-banner">
+  <div id="promo-marquee">
+    🎁 FREESHIP cho hóa đơn từ 500k! &nbsp;&nbsp;|&nbsp;&nbsp; 
+    🎉 Giảm 10% cho khách mua vào ngày và tháng trùng nhau (VD: 05/05, 12/12)! &nbsp;&nbsp;|&nbsp;&nbsp; 
+    🏷️ Tặng hộp quà cho mọi đơn hàng!
+  </div>
+</div>
   <h1>Giá bạc</h1>
   <div id="contact-bar">
     <span><b>Hotline/Zalo:</b> <a href="tel:0972512865">0972512865</a></span> &nbsp;|&nbsp;
