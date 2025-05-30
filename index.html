@@ -777,19 +777,24 @@ function showFlashSale() {
   if (!Array.isArray(dataAll) || dataAll.length === 0) return;
   const {now, start, end} = getFlashSaleWindow();
   const banner = document.getElementById('flashsale-banner');
+  const productDiv = document.getElementById('flashsale-product');
+  const priceDiv = document.getElementById('flashsale-price');
+  const btnBuy = document.getElementById('flashsale-buy');
+  const countdownDiv = document.getElementById('flashsale-countdown');
+
   if (now < start) {
     // Chưa tới giờ flash sale
     banner.style.display = 'block';
-    document.getElementById('flashsale-product').innerHTML = '';
-    document.getElementById('flashsale-price').innerHTML = '';
-    document.getElementById('flashsale-buy').style.display = 'none';
+    productDiv.innerHTML = '';
+    priceDiv.innerHTML = '';
+    btnBuy.style.display = 'none';
     let ms = Math.floor((start - now) / 1000);
     function updateCountdownToStart() {
       if (ms > 0) {
         let h = Math.floor(ms / 3600);
         let m = Math.floor((ms % 3600) / 60);
         let s = ms % 60;
-        document.getElementById('flashsale-countdown').textContent =
+        countdownDiv.textContent =
           `Bắt đầu sau: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         ms--;
         setTimeout(updateCountdownToStart, 1000);
@@ -803,10 +808,10 @@ function showFlashSale() {
   if (now >= end) {
     // Kết thúc flash sale
     banner.style.display = 'block';
-    document.getElementById('flashsale-product').innerHTML = '';
-    document.getElementById('flashsale-price').innerHTML = '';
-    document.getElementById('flashsale-buy').style.display = 'none';
-    document.getElementById('flashsale-countdown').textContent = "Đã kết thúc! Hẹn bạn ngày mai!";
+    productDiv.innerHTML = '';
+    priceDiv.innerHTML = '';
+    btnBuy.style.display = 'none';
+    countdownDiv.textContent = "Đã kết thúc! Hẹn vào 11h ngày mai.";
     return;
   }
   // Đang trong giờ flash sale
@@ -822,17 +827,17 @@ function showFlashSale() {
   const originalPrice = Number(String(flashProduct["giá"]).replace(/[^\d]+/g,"")) || 0;
   const salePrice = Math.round(originalPrice * 0.9); // Giảm 10%
   const imgUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/' + flashProduct.ms + '.jpg';
-  document.getElementById('flashsale-product').innerHTML =
+  productDiv.innerHTML =
     `<img src="${imgUrl}" alt="${flashProduct["tên"]}" style="height:60px;vertical-align:middle;margin-right:10px;border-radius:6px;box-shadow:0 2px 8px #f00a;" />` +
-    `<strong>${flashProduct["tên"]}</strong> (MS: ${flashProduct.ms})`;
-  document.getElementById('flashsale-price').innerHTML =
+    `<strong>${flashProduct["tên"]}</strong> (MS: ${flashProduct.ms})<br><span style="color:#b71c1c;font-size:1.08em;font-weight:bold;margin-top:4px;display:inline-block;">SỐ LƯỢNG: 1 MÓN DUY NHẤT</span>`;
+  priceDiv.innerHTML =
     `<span style="text-decoration:line-through;color:#888;font-size:.9em;margin-right:8px;">${formatPrice(originalPrice)}</span> ` +
     `<span style="color:#c62828;font-weight:bold;">${formatPrice(salePrice)}</span>`;
-  document.getElementById('flashsale-buy').style.display = 'inline-block';
-  document.getElementById('flashsale-buy').disabled = false;
-  document.getElementById('flashsale-buy').textContent = 'MUA NGAY';
-  document.getElementById('flashsale-buy').style.background = '#d84315';
-  document.getElementById('flashsale-buy').onclick = function() {
+  btnBuy.style.display = 'inline-block';
+  btnBuy.disabled = false;
+  btnBuy.textContent = 'MUA NGAY';
+  btnBuy.style.background = '#d84315';
+  btnBuy.onclick = function() {
     openOrderPopup(flashProduct.ms, flashProduct["tên"], formatPrice(salePrice), imgUrl);
   };
   banner.style.display = 'block';
@@ -843,7 +848,7 @@ function showFlashSale() {
       let h = Math.floor(ms / 3600);
       let m = Math.floor((ms % 3600) / 60);
       let s = ms % 60;
-      document.getElementById('flashsale-countdown').textContent =
+      countdownDiv.textContent =
         `Kết thúc sau: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
       ms--;
       setTimeout(updateCountdownToEnd, 1000);
