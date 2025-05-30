@@ -761,6 +761,18 @@ function getFlashSaleWindow() {
   return {now, start, end};
 }
 
+// Lưu và lấy sản phẩm flash sale theo ngày
+function getTodayKey() {
+  const now = new Date();
+  return `flashsale_${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}`;
+}
+function getTodayFlashSaleProductIdx() {
+  return localStorage.getItem(getTodayKey());
+}
+function setTodayFlashSaleProductIdx(idx) {
+  localStorage.setItem(getTodayKey(), idx);
+}
+
 function showFlashSale() {
   if (!Array.isArray(dataAll) || dataAll.length === 0) return;
   const {now, start, end} = getFlashSaleWindow();
@@ -798,7 +810,15 @@ function showFlashSale() {
     return;
   }
   // Đang trong giờ flash sale
-  const flashProduct = getRandomProduct(dataAll);
+  // Kiểm tra đã lưu sản phẩm hôm nay chưa
+  let todayIdx = getTodayFlashSaleProductIdx();
+  if (todayIdx === null || isNaN(todayIdx) || todayIdx >= dataAll.length) {
+    todayIdx = Math.floor(Math.random() * dataAll.length);
+    setTodayFlashSaleProductIdx(todayIdx);
+  } else {
+    todayIdx = Number(todayIdx);
+  }
+  const flashProduct = dataAll[todayIdx];
   const originalPrice = Number(String(flashProduct["giá"]).replace(/[^\d]+/g,"")) || 0;
   const salePrice = Math.round(originalPrice * 0.9); // Giảm 10%
   const imgUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/' + flashProduct.ms + '.jpg';
@@ -828,7 +848,7 @@ function showFlashSale() {
       ms--;
       setTimeout(updateCountdownToEnd, 1000);
     } else {
-      showFlashSale(); // Hết giờ, làm lại để thông báo
+      showFlashSale();
     }
   }
   updateCountdownToEnd();
