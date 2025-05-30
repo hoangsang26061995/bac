@@ -744,63 +744,67 @@ footer .workhours {
         document.getElementById('catalogue').innerText = 'Lỗi: ' + error.message;
       });
   </script>
-  <script>
-// Giả sử bạn có biến dataAll chứa tất cả sản phẩm
-// Nếu chưa có, hãy đảm bảo có biến dataAll là mảng sản phẩm như dưới:
-// dataAll = [{name: '...', price: 123000, img: '...', link: '...'}, ...]
-
+ <script>
 // Hàm lấy ngẫu nhiên 1 sản phẩm
 function getRandomProduct(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
-
 // Định dạng giá tiền
 function formatPrice(n) {
   return n.toLocaleString('vi-VN') + '₫';
 }
-
 // Thời gian Flash Sale (VD: 1 tiếng từ lúc load trang)
 const flashSaleDuration = 60 * 60; // 60 phút
 
-// Lấy sản phẩm ngẫu nhiên
-const flashProduct = getRandomProduct(dataAll);
-const originalPrice = flashProduct.price;
-const salePrice = Math.round(originalPrice * 0.9); // Giảm 10%
+function showFlashSale() {
+  if (!Array.isArray(dataAll) || dataAll.length === 0) return;
+  const flashProduct = getRandomProduct(dataAll);
+  // Lấy giá gốc từ trường "giá" (kiểu string, cần chuyển số)
+  const originalPrice = Number(String(flashProduct["giá"]).replace(/[^\d]+/g,"")) || 0;
+  const salePrice = Math.round(originalPrice * 0.9); // Giảm 10%
+  // Dựng link ảnh
+  const imgUrl = 'https://raw.githubusercontent.com/hoangsang26061995/anhbac/main/' + flashProduct.ms + '.jpg';
+  // Render banner
+  document.getElementById('flashsale-product').innerHTML =
+    `<img src="${imgUrl}" alt="${flashProduct["tên"]}" style="height:60px;vertical-align:middle;margin-right:10px;border-radius:6px;box-shadow:0 2px 8px #f00a;" />` +
+    `<strong>${flashProduct["tên"]}</strong> (MS: ${flashProduct.ms})`;
+  document.getElementById('flashsale-price').innerHTML =
+    `<span style="text-decoration:line-through;color:#888;font-size:.9em;margin-right:8px;">${formatPrice(originalPrice)}</span> ` +
+    `<span style="color:#c62828;font-weight:bold;">${formatPrice(salePrice)}</span>`;
+  document.getElementById('flashsale-buy').onclick = function() {
+    // Mở popup đặt hàng nhanh với sản phẩm này
+    openOrderPopup(flashProduct.ms, flashProduct["tên"], formatPrice(salePrice), imgUrl);
+  };
+  document.getElementById('flashsale-banner').style.display = 'block';
 
-// Render banner
-document.getElementById('flashsale-product').innerHTML =
-  `<img src="${flashProduct.img}" alt="${flashProduct.name}" style="height:60px;vertical-align:middle;margin-right:10px;border-radius:6px;box-shadow:0 2px 8px #f00a;" />` +
-  `<strong>${flashProduct.name}</strong>`;
-
-document.getElementById('flashsale-price').innerHTML =
-  `<span style="text-decoration:line-through;color:#888;font-size:.9em;margin-right:8px;">${formatPrice(originalPrice)}</span> ` +
-  `<span style="color:#c62828;font-weight:bold;">${formatPrice(salePrice)}</span>`;
-
-document.getElementById('flashsale-buy').onclick = function() {
-  window.location.href = flashProduct.link || "#";
-};
-
-document.getElementById('flashsale-banner').style.display = 'block';
-
-// Đếm ngược Flash Sale
-let timeLeft = flashSaleDuration;
-function updateCountdown() {
-  let h = Math.floor(timeLeft / 3600);
-  let m = Math.floor((timeLeft % 3600) / 60);
-  let s = timeLeft % 60;
-  document.getElementById('flashsale-countdown').textContent =
-    `Kết thúc sau: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-  if (timeLeft > 0) {
-    timeLeft--;
-    setTimeout(updateCountdown, 1000);
-  } else {
-    document.getElementById('flashsale-countdown').textContent = "Đã kết thúc!";
-    document.getElementById('flashsale-buy').disabled = true;
-    document.getElementById('flashsale-buy').style.background = '#aaa';
-    document.getElementById('flashsale-buy').textContent = 'HẾT GIỜ';
+  // Đếm ngược Flash Sale
+  let timeLeft = flashSaleDuration;
+  function updateCountdown() {
+    let h = Math.floor(timeLeft / 3600);
+    let m = Math.floor((timeLeft % 3600) / 60);
+    let s = timeLeft % 60;
+    document.getElementById('flashsale-countdown').textContent =
+      `Kết thúc sau: ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    if (timeLeft > 0) {
+      timeLeft--;
+      setTimeout(updateCountdown, 1000);
+    } else {
+      document.getElementById('flashsale-countdown').textContent = "Đã kết thúc!";
+      document.getElementById('flashsale-buy').disabled = true;
+      document.getElementById('flashsale-buy').style.background = '#aaa';
+      document.getElementById('flashsale-buy').textContent = 'HẾT GIỜ';
+    }
   }
+  updateCountdown();
 }
-updateCountdown();
+
+// Đợi dữ liệu load xong mới hiển thị Flash Sale
+const oldFlashSaleCheck = setInterval(()=>{
+  if(Array.isArray(dataAll) && dataAll.length>0){
+    clearInterval(oldFlashSaleCheck);
+    showFlashSale();
+  }
+}, 200);
 </script>
 </body>
 </html>
