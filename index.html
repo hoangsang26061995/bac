@@ -12,6 +12,27 @@
   <meta property="og:url" content="https://hoangsang26061995.github.io/bac/">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3176/3176367.png">
   <style>
+    ...
+#promo-banner {
+  background: linear-gradient(90deg,#ff9800,#ff3d00);
+  color: #fff;
+  font-size: 1.25em;
+  font-weight: bold;
+  text-align: center;
+  padding: 16px 10px 14px 10px;
+  margin: 0 0 18px 0;
+  letter-spacing: 1px;
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 2px 14px #ff980055;
+  animation: promoFade 1.2s;
+  position: relative;
+  z-index: 2;
+}
+@keyframes promoFade {
+  from {opacity:0;transform:translateY(-40px);}
+  to {opacity:1;transform:translateY(0);}
+}
+...
     body {background:#fff;font-family:Arial,sans-serif;margin:0;padding:0;}
     h1 {text-align:center;font-size:2.3em;margin-bottom:10px;margin-top:20px;color:#333;letter-spacing:2px;}
     #contact-bar {text-align:center;margin-bottom:10px;font-size:1.18em;background:#f9f9f9;padding:10px 0;border-bottom:1px solid #eee;}
@@ -126,6 +147,10 @@
 </head>
 <body>
   <h1>Giá bạc</h1>
+  <!-- Banner khuyến mãi -->
+<div id="promo-banner">
+  🎉 <b>Khuyến mãi HOT:</b> Miễn phí ship đơn từ 1.000.000đ và tặng kèm hộp đựng cao cấp! 🎁
+</div>
   <div id="contact-bar">
     <span><b>Hotline/Zalo:</b> <a href="tel:0972512865">0972512865</a></span> &nbsp;|&nbsp;
     <span><b>Email:</b> <a class="gmail" href="mailto:hsck19956@gmail.com">hsck19956@gmail.com</a></span> &nbsp;|&nbsp;
