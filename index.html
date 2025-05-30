@@ -122,10 +122,41 @@
       #featured-list {flex-direction:column;gap:18px;}
       .featured-item {width:96vw;max-width:96vw;}
     }
+    #promo-banner {
+  background: linear-gradient(90deg, #ff9800 10%, #007aff 90%);
+  color: #fff;
+  text-align: center;
+  font-size: 1.18em;
+  font-weight: bold;
+  padding: 12px 6px 12px 6px;
+  border-radius: 10px;
+  margin: 0 auto 18px auto;
+  max-width: 700px;
+  box-shadow: 0 2px 16px #007aff20;
+  letter-spacing: 1px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+@media (max-width: 700px) {
+  #promo-banner {
+    font-size: 1em;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 2vw;
+  }
+  #promo-banner span {display: block;}
+}
   </style>
 </head>
 <body>
   <h1>Giá bạc</h1>
+  <div id="promo-banner">
+  <span>🎁 <b>BẢO HÀNH LÀM SÁNG TRỌN ĐỜI</b></span>
+  <span> | 🗃️ <b>TẶNG HỘP BẢO QUẢN</b></span>
+  <span> | 🚚 <b>FREE SHIP ĐƠN TRÊN 500K</b></span>
+</div>
   <div id="contact-bar">
     <span><b>Hotline/Zalo:</b> <a href="tel:0972512865">0972512865</a></span> &nbsp;|&nbsp;
     <span><b>Email:</b> <a class="gmail" href="mailto:hsck19956@gmail.com">hsck19956@gmail.com</a></span> &nbsp;|&nbsp;
