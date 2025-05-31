@@ -248,6 +248,8 @@ footer .workhours {
   60%  { text-shadow:0 0 12px #ff9800,0 0 2px #fff,0 0 24px #ff9800,1px 2px 10px #fff176; }
   100% { text-shadow:0 0 18px #ff9800,0 0 4px #fff,0 0 40px #ff9800,3px 4px 30px #fff176; }
 }
+      #img-modal { display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.82); align-items:center; justify-content:center; }
+#img-modal img { max-width:96vw; max-height:92vh; border-radius:12px; box-shadow:0 2px 16px #000b; display:block; }
   </style>
     <!-- Dán đoạn Google Analytics ở đây -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTS9BE5CWF"></script>
@@ -894,6 +896,38 @@ const flashSaleCheck = setInterval(()=>{
     setInterval(showFlashSale, 60000);
   }
 }, 200);
+</script>
+  <!-- Modal phóng to ảnh -->
+<div id="img-modal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.82);align-items:center;justify-content:center;">
+  <img id="img-modal-content" src="" alt="" style="max-width:96vw;max-height:92vh;border-radius:12px;box-shadow:0 2px 16px #000b;display:block;">
+</div>
+  <script>
+// Mở modal khi click ảnh
+document.addEventListener('click', function(e) {
+  if (e.target.tagName === 'IMG' && (e.target.closest('.item') || e.target.closest('.featured-item'))) {
+    const src = e.target.src;
+    const alt = e.target.alt || '';
+    const modal = document.getElementById('img-modal');
+    const modalImg = document.getElementById('img-modal-content');
+    modal.style.display = 'flex';
+    modalImg.src = src;
+    modalImg.alt = alt;
+    document.body.style.overflow = 'hidden'; // Ẩn scroll
+  }
+});
+// Đóng modal khi click nền tối hoặc nhấn phím ESC
+document.getElementById('img-modal').onclick = function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.getElementById('img-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+});
 </script>
 </body>
 </html>
