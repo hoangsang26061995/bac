@@ -292,6 +292,10 @@ footer .workhours {
   .hangmoive-item, .hangmoive-item img {width:48vw;min-width:130px;max-width:98vw;}
   .hangmoive-item img {height:98px;}
 }
+      .label-blue {
+  color: #007aff !important;
+  font-weight: bold;
+}
   </style>
     <!-- Dán đoạn Google Analytics ở đây -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTS9BE5CWF"></script>
@@ -608,10 +612,10 @@ function initHangMoiVeSlider(){
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
         const p = document.createElement('p');
-        p.innerHTML =
-          `<b>MS:</b> ${item.ms}<br>` +
-          `<b>Tên:</b> ${item["tên"]}<br>` +
-          `<b>Giá:</b> ${item["giá"]}`;
+       p.innerHTML =
+  `<b class="label-blue">MS:</b> ${item.ms}<br>` +
+  `<b class="label-blue">Tên:</b> ${item["tên"]}<br>` +
+  `<b class="label-blue">Giá:</b> ${item["giá"]}`;
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
@@ -727,10 +731,7 @@ function initHangMoiVeSlider(){
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
         const p = document.createElement('p');
-        p.innerHTML =
-          `<b>MS:</b> ${item.ms}<br>` +
-          `<b>Tên:</b> ${item["tên"]}<br>` +
-          `<b>Giá:</b> ${item["giá"]}`;
+        `<b>MS:</b> ${item.ms}<br>` +
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
@@ -842,10 +843,10 @@ function initHangMoiVeSlider(){
         `<div style="margin-bottom:10px;">
           <img src="${imgUrl}" alt="${ten || ''}" style="max-width:220px;max-height:220px;border-radius:11px;box-shadow:0 2px 8px #0003;background:#fff;"><br>
           <div style="font-size:1.15em;margin-top:10px;">
-            <b>Mã sản phẩm:</b> ${ms}<br>
-            <b>Tên:</b> ${ten}<br>
-            <b>Giá:</b> ${gia || ''}<br>
-          </div>
+  <b class="label-blue">Mã sản phẩm:</b> ${ms}<br>
+  <b class="label-blue">Tên:</b> ${ten}<br>
+  <b class="label-blue">Giá:</b> ${gia || ''}<br>
+</div>
         </div>
         <button onclick="navigator.clipboard.writeText('Mã: ${ms}, Tên: ${ten}');this.innerText='Đã copy!';setTimeout(()=>this.innerText='Copy mã',1500)" style="padding:7px 18px;border-radius:6px;background:#eee;border:none;cursor:pointer;">Copy mã</button>`;
       const messText = encodeURIComponent(`Shop ơi mình muốn đặt sản phẩm "${ms}"`);
