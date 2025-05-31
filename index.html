@@ -370,7 +370,6 @@ footer .workhours {
     }
 
     const categories = [
-      { key: "hangmoi", label: "HÀNG MỚI VỀ", keyword: "hangmoi" },
       { key: "day", label: "DÂY", keyword: "day" },
       { key: "nhan", label: "NHẪN", keyword: "nhan" },
       { key: "lac", label: "LẮC", keyword: "lac" },
@@ -676,31 +675,19 @@ footer .workhours {
         catDiv.appendChild(el);
       });
     }
-  function getRandomDailyProducts(arr, count, seed) {
-  // Hàm lấy ngẫu nhiên nhưng cố định theo ngày
-  let idx = arr.map((_, i) => i);
-  function seededRandom(s) { var x = Math.sin(s) * 10000; return x - Math.floor(x); }
-  idx.sort((a, b) => seededRandom(seed + a) - seededRandom(seed + b));
-  return idx.slice(0, count).map(i => arr[i]);
-}
-
-function classifyProducts() {
-  productsByCat = {};
-  categories.forEach(cat => productsByCat[cat.key] = []);
-  dataAll.forEach(item => {
-    const ten = removeVietnameseTones((item["tên"] || "").toLowerCase());
-    for (let cat of categories) {
-      if (cat.key !== "hangmoi" && ten.includes(cat.keyword)) {
-        productsByCat[cat.key].push(item);
-        break;
-      }
+    function classifyProducts() {
+      productsByCat = {};
+      categories.forEach(cat => productsByCat[cat.key] = []);
+      dataAll.forEach(item => {
+        const ten = removeVietnameseTones((item["tên"] || "").toLowerCase());
+        for (let cat of categories) {
+          if (ten.includes(cat.keyword)) {
+            productsByCat[cat.key].push(item);
+            break;
+          }
+        }
+      });
     }
-  });
-  // HÀNG MỚI VỀ: mỗi ngày lấy 10 sản phẩm ngẫu nhiên từ toàn bộ dataAll
-  const d = new Date();
-  const seed = d.getFullYear() * 400 + d.getMonth() * 31 + d.getDate();
-  productsByCat["hangmoi"] = getRandomDailyProducts(dataAll, 10, seed);
-}
     // Ripple effect cho nút
     function rippleEffect(e, btn) {
       const rect = btn.getBoundingClientRect();
