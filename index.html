@@ -620,7 +620,7 @@ function initHangMoiVeSlider(){
         div.className = 'item';
         setTimeout(()=>div.classList.add('show'),80+i*45);
         const img = document.createElement('img');
-        img.src = imgBaseUrl + item.ms + '.jpg';
+        img.src = imgBaseUrl + item.ms + '.png'; img.onerror = function() {   this.onerror = null;   this.src = imgBaseUrl + item.ms + '.jpg'; };
         img.alt = item["tên"] || '';
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
@@ -658,7 +658,7 @@ function initHangMoiVeSlider(){
         badge.textContent = 'Nổi bật';
         div.appendChild(badge);
         const img = document.createElement('img');
-        img.src = imgBaseUrl + item.ms + '.jpg';
+        img.src = imgBaseUrl + item.ms + '.png'; img.onerror = function() {   this.onerror = null;   this.src = imgBaseUrl + item.ms + '.jpg'; };
         img.alt = item["tên"] || '';
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
@@ -742,7 +742,7 @@ function initHangMoiVeSlider(){
         div.className = 'item';
         setTimeout(()=>div.classList.add('show'),80+i*45);
         const img = document.createElement('img');
-        img.src = imgBaseUrl + item.ms + '.jpg';
+        img.src = imgBaseUrl + item.ms + '.png'; img.onerror = function() {   this.onerror = null;   this.src = imgBaseUrl + item.ms + '.jpg'; };
         img.alt = item["tên"] || '';
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
