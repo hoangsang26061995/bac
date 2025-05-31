@@ -1,337 +1,342 @@
 [
     {
-        "Filename": "1",
-        "Title": "DÂY",
-        "Subject": "320"
+        "ms":1,
+        "giá":320,
+        "tên":"DÂY"
     },
     {
-        "Filename": "2",
-        "Title": "LẮC",
-        "Subject": "440"
+        "ms":2,
+        "giá":440,
+        "tên":"LẮC"
     },
     {
-        "Filename": "3",
-        "Title": "LẮC",
-        "Subject": "890"
+        "ms":3,
+        "giá":890,
+        "tên":"LẮC"
     },
     {
-        "Filename": "4",
-        "Title": "LẮC",
-        "Subject": "670"
+        "ms":4,
+        "giá":670,
+        "tên":"LẮC"
     },
     {
-        "Filename": "5",
-        "Title": "NHẪN",
-        "Subject": "140"
+        "ms":5,
+        "giá":140,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "6",
-        "Title": "LẮC",
-        "Subject": "880"
+        "ms":6,
+        "giá":880,
+        "tên":"LẮC"
     },
     {
-        "Filename": "7",
-        "Title": "LẮC",
-        "Subject": "300"
+        "ms":7,
+        "giá":300,
+        "tên":"LẮC"
     },
     {
-        "Filename": "8",
-        "Title": "DÂY",
-        "Subject": "400"
+        "ms":8,
+        "giá":400,
+        "tên":"DÂY"
     },
     {
-        "Filename": "9",
-        "Title": "DÂY",
-        "Subject": "1170"
+        "ms":9,
+        "giá":1170,
+        "tên":"DÂY"
     },
     {
-        "Filename": "10",
-        "Title": "DÂY",
-        "Subject": "340"
+        "ms":10,
+        "giá":340,
+        "tên":"DÂY"
     },
     {
-        "Filename": "11",
-        "Title": "LẮC",
-        "Subject": "460"
+        "ms":11,
+        "giá":460,
+        "tên":"LẮC"
     },
     {
-        "Filename": "12",
-        "Title": "DÂY",
-        "Subject": "1130"
+        "ms":12,
+        "giá":1130,
+        "tên":"DÂY"
     },
     {
-        "Filename": "13",
-        "Title": "DÂY",
-        "Subject": "580"
+        "ms":13,
+        "giá":580,
+        "tên":"DÂY"
     },
     {
-        "Filename": "14",
-        "Title": "DÂY",
-        "Subject": "270"
+        "ms":14,
+        "giá":270,
+        "tên":"DÂY"
     },
     {
-        "Filename": "15",
-        "Title": "NHẪN",
-        "Subject": "400"
+        "ms":15,
+        "giá":400,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "16",
-        "Title": "NHẪN",
-        "Subject": "220"
+        "ms":16,
+        "giá":220,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "17",
-        "Title": "DÂY",
-        "Subject": "350"
+        "ms":17,
+        "giá":350,
+        "tên":"DÂY"
     },
     {
-        "Filename": "18",
-        "Title": "LẮC",
-        "Subject": "280"
+        "ms":18,
+        "giá":280,
+        "tên":"LẮC"
     },
     {
-        "Filename": "19",
-        "Title": "NHẪN",
-        "Subject": "190"
+        "ms":19,
+        "giá":190,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "20",
-        "Title": "DÂY",
-        "Subject": "290"
+        "ms":20,
+        "giá":290,
+        "tên":"DÂY"
     },
     {
-        "Filename": "21",
-        "Title": "DÂY",
-        "Subject": "260"
+        "ms":21,
+        "giá":260,
+        "tên":"DÂY"
     },
     {
-        "Filename": "22",
-        "Title": "LẮC",
-        "Subject": "200"
+        "ms":22,
+        "giá":200,
+        "tên":"LẮC"
     },
     {
-        "Filename": "23",
-        "Title": "DÂY",
-        "Subject": "280"
+        "ms":23,
+        "giá":280,
+        "tên":"DÂY"
     },
     {
-        "Filename": "24",
-        "Title": "LẮC",
-        "Subject": "320"
+        "ms":24,
+        "giá":320,
+        "tên":"LẮC"
     },
     {
-        "Filename": "25",
-        "Title": "DÂY",
-        "Subject": "260"
+        "ms":25,
+        "giá":260,
+        "tên":"DÂY"
     },
     {
-        "Filename": "26",
-        "Title": "DÂY",
-        "Subject": "1000"
+        "ms":26,
+        "giá":1000,
+        "tên":"DÂY"
     },
     {
-        "Filename": "27",
-        "Title": "NHẪN",
-        "Subject": "170"
+        "ms":27,
+        "giá":170,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "28",
-        "Title": "DÂY",
-        "Subject": "620"
+        "ms":28,
+        "giá":620,
+        "tên":"DÂY"
     },
     {
-        "Filename": "29",
-        "Title": "NHẪN",
-        "Subject": "240"
+        "ms":29,
+        "giá":240,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "30",
-        "Title": "DÂY",
-        "Subject": "290"
+        "ms":30,
+        "giá":290,
+        "tên":"DÂY"
     },
     {
-        "Filename": "31",
-        "Title": "NHẪN",
-        "Subject": "570"
+        "ms":31,
+        "giá":570,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "32",
-        "Title": "DÂY",
-        "Subject": "940"
+        "ms":32,
+        "giá":940,
+        "tên":"DÂY"
     },
     {
-        "Filename": "33",
-        "Title": "NHẪN",
-        "Subject": "230"
+        "ms":33,
+        "giá":230,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "34",
-        "Title": "NHẪN",
-        "Subject": "230"
+        "ms":34,
+        "giá":230,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "35",
-        "Title": "DÂY",
-        "Subject": "1160"
+        "ms":35,
+        "giá":1160,
+        "tên":"DÂY"
     },
     {
-        "Filename": "36",
-        "Title": "DÂY",
-        "Subject": "280"
+        "ms":36,
+        "giá":280,
+        "tên":"DÂY"
     },
     {
-        "Filename": "37",
-        "Title": "DÂY",
-        "Subject": "450"
+        "ms":37,
+        "giá":450,
+        "tên":"DÂY"
     },
     {
-        "Filename": "38",
-        "Title": "NHẪN",
-        "Subject": "100"
+        "ms":38,
+        "giá":100,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "39",
-        "Title": "DÂY",
-        "Subject": "260"
+        "ms":39,
+        "giá":260,
+        "tên":"DÂY"
     },
     {
-        "Filename": "40",
-        "Title": "DÂY",
-        "Subject": "380"
+        "ms":40,
+        "giá":380,
+        "tên":"DÂY"
     },
     {
-        "Filename": "41",
-        "Title": "DÂY",
-        "Subject": "520"
+        "ms":41,
+        "giá":520,
+        "tên":"DÂY"
     },
     {
-        "Filename": "42",
-        "Title": "NHẪN",
-        "Subject": "570"
+        "ms":42,
+        "giá":570,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "43",
-        "Title": "DÂY",
-        "Subject": "1080"
+        "ms":43,
+        "giá":1080,
+        "tên":"DÂY"
     },
     {
-        "Filename": "44",
-        "Title": "DÂY",
-        "Subject": "930"
+        "ms":44,
+        "giá":930,
+        "tên":"DÂY"
     },
     {
-        "Filename": "45",
-        "Title": "DÂY",
-        "Subject": "210"
+        "ms":45,
+        "giá":210,
+        "tên":"DÂY"
     },
     {
-        "Filename": "46",
-        "Title": "DÂY",
-        "Subject": "1160"
+        "ms":46,
+        "giá":1160,
+        "tên":"DÂY"
     },
     {
-        "Filename": "47",
-        "Title": "DÂY",
-        "Subject": "230"
+        "ms":47,
+        "giá":230,
+        "tên":"DÂY"
     },
     {
-        "Filename": "48",
-        "Title": "DÂY",
-        "Subject": "920"
+        "ms":48,
+        "giá":920,
+        "tên":"DÂY"
     },
     {
-        "Filename": "49",
-        "Title": "NHẪN",
-        "Subject": "370"
+        "ms":49,
+        "giá":370,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "50",
-        "Title": "LẮC",
-        "Subject": "300"
+        "ms":50,
+        "giá":300,
+        "tên":"LẮC"
     },
     {
-        "Filename": "51",
-        "Title": "DÂY",
-        "Subject": "290"
+        "ms":51,
+        "giá":290,
+        "tên":"DÂY"
     },
     {
-        "Filename": "52",
-        "Title": "NHẪN",
-        "Subject": "530"
+        "ms":52,
+        "giá":530,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "53",
-        "Title": "LẮC",
-        "Subject": "280"
+        "ms":53,
+        "giá":280,
+        "tên":"LẮC"
     },
     {
-        "Filename": "54",
-        "Title": "DÂY",
-        "Subject": "810"
+        "ms":54,
+        "giá":810,
+        "tên":"DÂY"
     },
     {
-        "Filename": "55",
-        "Title": "NHẪN",
-        "Subject": "560"
+        "ms":55,
+        "giá":560,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "56",
-        "Title": "DÂY",
-        "Subject": "930"
+        "ms":56,
+        "giá":930,
+        "tên":"DÂY"
     },
     {
-        "Filename": "57",
-        "Title": "LẮC",
-        "Subject": "260"
+        "ms":57,
+        "giá":260,
+        "tên":"LẮC"
     },
     {
-        "Filename": "58",
-        "Title": "DÂY",
-        "Subject": "300"
+        "ms":58,
+        "giá":300,
+        "tên":"DÂY"
     },
     {
-        "Filename": "59",
-        "Title": "LẮC",
-        "Subject": "280"
+        "ms":59,
+        "giá":280,
+        "tên":"LẮC"
     },
     {
-        "Filename": "60",
-        "Title": "NHẪN",
-        "Subject": "450"
+        "ms":60,
+        "giá":450,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "61",
-        "Title": "LẮC",
-        "Subject": "350"
+        "ms":61,
+        "giá":350,
+        "tên":"LẮC"
     },
     {
-        "Filename": "62",
-        "Title": "DÂY",
-        "Subject": "270"
+        "ms":62,
+        "giá":270,
+        "tên":"DÂY"
     },
     {
-        "Filename": "63",
-        "Title": "NHẪN",
-        "Subject": "480"
+        "ms":63,
+        "giá":480,
+        "tên":"NHẪN"
     },
     {
-        "Filename": "64",
-        "Title": "LẮC",
-        "Subject": "430"
+        "ms":64,
+        "giá":430,
+        "tên":"LẮC"
     },
     {
-        "Filename": "65",
-        "Title": "DÂY",
-        "Subject": "200"
+        "ms":65,
+        "giá":200,
+        "tên":"DÂY"
     },
     {
-        "Filename": "66",
-        "Title": "LẮC",
-        "Subject": "200"
+        "ms":66,
+        "giá":200,
+        "tên":"LẮC"
     },
     {
-        "Filename": "67",
-        "Title": "LẮC",
-        "Subject": "300"
+        "ms":67,
+        "giá":300,
+        "tên":"LẮC"
+    },
+    {
+        "ms":68,
+        "giá":300,
+        "tên":"LẮC"
     }
 ]
