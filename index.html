@@ -250,6 +250,43 @@ footer .workhours {
 }
       #img-modal { display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.82); align-items:center; justify-content:center; }
 #img-modal img { max-width:96vw; max-height:92vh; border-radius:12px; box-shadow:0 2px 16px #000b; display:block; }
+  #hangmoive-slider {
+  display: flex;
+  gap: 18px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 12px;
+}
+.hangmoive-item {
+  display: inline-block;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px #0001;
+  width: 180px;
+  min-width: 180px;
+  max-width: 90vw;
+  text-align: center;
+  margin-bottom: 8px;
+  padding: 10px 5px 17px 5px;
+  position: relative;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.hangmoive-item:hover {
+  transform: scale(1.035) translateY(-3px);
+  box-shadow: 0 6px 26px #1abc9c33;
+}
+.hangmoive-item img {
+  width: 158px; height: 158px; object-fit:cover;
+  border-radius: 8px; background:#fafafa;
+  box-shadow:0 1px 6px #0002;margin-bottom:8px;
+  cursor: pointer;
+}
+.hangmoive-item .order-btn {padding:7px 16px;font-size:0.98em;}
+@media (max-width:700px){
+  #hangmoive-slider {gap:9px;}
+  .hangmoive-item, .hangmoive-item img {width:48vw;min-width:130px;max-width:98vw;}
+  .hangmoive-item img {height:98px;}
+}
   </style>
     <!-- Dán đoạn Google Analytics ở đây -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTS9BE5CWF"></script>
@@ -289,6 +326,12 @@ footer .workhours {
   <div id="flashsale-price" style="font-size:1.6em; margin-bottom:10px;"></div>
   <div id="flashsale-countdown" style="font-size:1.3em; color:#d84315; font-weight:bold;"></div>
   <button id="flashsale-buy" style="margin-top:12px; padding:10px 24px; font-size:1em; background:#d84315; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:bold;">MUA NGAY</button>
+</div>
+    <div id="hangmoive" class="scroll-fade" style="max-width:920px;margin:26px auto 16px auto;">
+  <h2 style="color:#e67e22;text-align:center;margin-bottom:12px;letter-spacing:2px;">HÀNG MỚI VỀ</h2>
+  <div id="hangmoive-slider" style="overflow-x:auto;white-space:nowrap;padding:6px 0 10px 0;">
+    <!-- JS sẽ render sản phẩm tại đây -->
+  </div>
 </div>
     <h2>Sản phẩm nổi bật</h2>
     <div id="featured-list"></div>
@@ -421,6 +464,38 @@ footer .workhours {
         </div>`;
       }
       document.getElementById('testimonials-list').innerHTML = html;
+    }
+     function getRandomDailyProducts(arr, count, seed) {
+      let idx = arr.map((_, i) => i);
+      function seededRandom(s) { var x = Math.sin(s) * 10000; return x - Math.floor(x); }
+      idx.sort((a, b) => seededRandom(seed + a) - seededRandom(seed + b));
+      return idx.slice(0, count).map(i => arr[i]);
+    }
+
+    function showHangMoiVe() {
+      if (!Array.isArray(dataAll) || dataAll.length === 0) return;
+      const d = new Date();
+      const seed = d.getFullYear()*400 + d.getMonth()*31 + d.getDate();
+      const hangmoi10 = getRandomDailyProducts(dataAll, 10, seed);
+      const slider = document.getElementById('hangmoive-slider');
+      slider.innerHTML = '';
+      hangmoi10.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'hangmoive-item';
+        div.innerHTML = `
+          <img src="${imgBaseUrl+item.ms}.jpg" alt="${item["tên"]||""}" title="${item["MÔ TẢ"]||""}">
+          <div style="font-size:1.06em;font-weight:bold">${item["tên"]||""}</div>
+          <div style="font-size:.95em;color:#888;">MS: ${item.ms}</div>
+          <div style="color:#c62828;font-weight:bold;font-size:1.07em;margin:6px 0 8px 0;">${item["giá"]||""}</div>
+          <button class="order-btn ripple-btn" onclick="openOrderPopup('${item.ms}','${item["tên"]||""}','${item["giá"]||""}','${imgBaseUrl+item.ms}.jpg');event.stopPropagation();">ĐẶT HÀNG</button>
+        `;
+        div.querySelector('img').onclick = function(e) {
+          openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl+item.ms+".jpg");
+          e.stopPropagation();
+        };
+        slider.appendChild(div);
+      });
+      rippleBtnInit();
     }
 
     // Loading skeleton
@@ -758,15 +833,16 @@ footer .workhours {
         return response.json();
       })
       .then(data => {
-        hideLoader();
-        dataAll = data;
-        classifyProducts();
-        renderCatalogue();
-        showCatalogue();
-        showFeaturedProducts();
-        renderTestimonials();
-        rippleBtnInit();
-      })
+  hideLoader();
+  dataAll = data;
+  classifyProducts();
+  renderCatalogue();
+  showCatalogue();
+  showHangMoiVe(); // GỌI THÊM HÀM NÀY
+  showFeaturedProducts();
+  renderTestimonials();
+  rippleBtnInit();
+})
       .catch(error => {
         hideLoader();
         document.getElementById('catalogue').innerText = 'Lỗi: ' + error.message;
