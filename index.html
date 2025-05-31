@@ -296,6 +296,11 @@ footer .workhours {
   color: #007aff !important;
   font-weight: bold;
 }
+      .value-blue {
+  color: #007aff !important;
+  font-weight: 900 !important; /* In đậm hơn */
+  letter-spacing: 1px;
+}
   </style>
     <!-- Dán đoạn Google Analytics ở đây -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CTS9BE5CWF"></script>
@@ -494,12 +499,12 @@ function showHangMoiVe() {
     const div = document.createElement('div');
     div.className = 'hangmoive-item';
     div.innerHTML = `
-      <img src="${imgBaseUrl+item.ms}.jpg" alt="${item["tên"]||""}" title="${item["MÔ TẢ"]||""}">
-      <div style="font-size:1.06em;font-weight:bold">${item["tên"]||""}</div>
-      <div style="font-size:.95em;color:#888;">MS: ${item.ms}</div>
-      <div style="color:#c62828;font-weight:bold;font-size:1.07em;margin:6px 0 8px 0;">${item["giá"]||""}</div>
-      <button class="order-btn ripple-btn" onclick="openOrderPopup('${item.ms}','${item["tên"]||""}','${item["giá"]||""}','${imgBaseUrl+item.ms}.jpg');event.stopPropagation();">ĐẶT HÀNG</button>
-    `;
+  <img ...>
+  <div><b class="value-blue">Tên:</b> <span class="value-blue">${item["tên"]||""}</span></div>
+  <div><b class="value-blue">MS:</b> <span class="value-blue">${item.ms}</span></div>
+  <div><b class="value-blue">Giá:</b> <span class="value-blue">${item["giá"]||""}</span></div>
+  ...
+`;
     div.querySelector('img').onclick = function(e) {
       openOrderPopup(item.ms, item["tên"], item["giá"], imgBaseUrl+item.ms+".jpg");
       e.stopPropagation();
@@ -613,9 +618,9 @@ function initHangMoiVeSlider(){
         div.appendChild(img);
         const p = document.createElement('p');
        p.innerHTML =
-  `<b class="label-blue">MS:</b> ${item.ms}<br>` +
-  `<b class="label-blue">Tên:</b> ${item["tên"]}<br>` +
-  `<b class="label-blue">Giá:</b> ${item["giá"]}`;
+  `<b class="value-blue">MS:</b> <span class="value-blue">${item.ms}</span><br>` +
+  `<b class="value-blue">Tên:</b> <span class="value-blue">${item["tên"]}</span><br>` +
+  `<b class="value-blue">Giá:</b> <span class="value-blue">${item["giá"]}</span>`;
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
@@ -650,7 +655,10 @@ function initHangMoiVeSlider(){
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
         const p = document.createElement('p');
-        p.innerHTML =   `<b class="label-blue">Tên:</b> ${item["tên"]}<br>` +   `<b class="label-blue">MS:</b> ${item.ms}<br>` +   `<b class="label-blue">Giá:</b> ${item["giá"]}`;
+        p.innerHTML =
+  `<b class="value-blue">Tên:</b> <span class="value-blue">${item["tên"]}</span><br>` +
+  `<b class="value-blue">MS:</b> <span class="value-blue">${item.ms}</span><br>` +
+  `<b class="value-blue">Giá:</b> <span class="value-blue">${item["giá"]}</span>`;
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
@@ -732,9 +740,9 @@ function initHangMoiVeSlider(){
         div.appendChild(img);
         const p = document.createElement('p');
 p.innerHTML =
-  `<b class="label-blue">MS:</b> ${item.ms}<br>` +
-  `<b class="label-blue">Tên:</b> ${item["tên"]}<br>` +
-  `<b class="label-blue">Giá:</b> ${item["giá"]}`;
+  `<b class="value-blue">MS:</b> <span class="value-blue">${item.ms}</span><br>` +
+  `<b class="value-blue">Tên:</b> <span class="value-blue">${item["tên"]}</span><br>` +
+  `<b class="value-blue">Giá:</b> <span class="value-blue">${item["giá"]}</span>`;
 div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
@@ -846,9 +854,9 @@ div.appendChild(p);
         `<div style="margin-bottom:10px;">
           <img src="${imgUrl}" alt="${ten || ''}" style="max-width:220px;max-height:220px;border-radius:11px;box-shadow:0 2px 8px #0003;background:#fff;"><br>
           <div style="font-size:1.15em;margin-top:10px;">
-  <b class="label-blue">Mã sản phẩm:</b> ${ms}<br>
-  <b class="label-blue">Tên:</b> ${ten}<br>
-  <b class="label-blue">Giá:</b> ${gia || ''}<br>
+  <b class="value-blue">Mã sản phẩm:</b> <span class="value-blue">${ms}</span><br>
+  <b class="value-blue">Tên:</b> <span class="value-blue">${ten}</span><br>
+  <b class="value-blue">Giá:</b> <span class="value-blue">${gia || ''}</span><br>
 </div>
         </div>
         <button onclick="navigator.clipboard.writeText('Mã: ${ms}, Tên: ${ten}');this.innerText='Đã copy!';setTimeout(()=>this.innerText='Copy mã',1500)" style="padding:7px 18px;border-radius:6px;background:#eee;border:none;cursor:pointer;">Copy mã</button>`;
