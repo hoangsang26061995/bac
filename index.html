@@ -650,7 +650,7 @@ function initHangMoiVeSlider(){
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
         const p = document.createElement('p');
-        p.innerHTML = `<b>${item["tên"]}</b><br>MS: ${item.ms}<br>Giá: ${item["giá"]}`;
+        p.innerHTML =   `<b class="label-blue">Tên:</b> ${item["tên"]}<br>` +   `<b class="label-blue">MS:</b> ${item.ms}<br>` +   `<b class="label-blue">Giá:</b> ${item["giá"]}`;
         div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
@@ -731,8 +731,11 @@ function initHangMoiVeSlider(){
         img.title = item["MÔ TẢ"] || '';
         div.appendChild(img);
         const p = document.createElement('p');
-        `<b>MS:</b> ${item.ms}<br>` +
-        div.appendChild(p);
+p.innerHTML =
+  `<b class="label-blue">MS:</b> ${item.ms}<br>` +
+  `<b class="label-blue">Tên:</b> ${item["tên"]}<br>` +
+  `<b class="label-blue">Giá:</b> ${item["giá"]}`;
+div.appendChild(p);
         const orderBtn = document.createElement('button');
         orderBtn.textContent = 'ĐẶT HÀNG';
         orderBtn.className = 'order-btn ripple-btn';
