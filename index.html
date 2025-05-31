@@ -525,9 +525,9 @@ function initHangMoiVeSlider(){
   window.addEventListener('resize', update);
   update();
   clearInterval(autoTimer);
-  autoTimer = setInterval(next, 3500);
+  autoTimer = setInterval(next, 1700);
   slider.onmouseenter = ()=>clearInterval(autoTimer);
-  slider.onmouseleave = ()=>autoTimer = setInterval(next, 3500);
+  slider.onmouseleave = ()=>autoTimer = setInterval(next, 1700);
 }
     // Loading skeleton
     function showLoader(n) {
